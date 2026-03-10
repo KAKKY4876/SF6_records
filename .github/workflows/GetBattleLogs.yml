@@ -21,6 +21,8 @@ jobs:
       - name: ライブラリインストール
         run: |
           pip install -r requirements.txt
+          pip install playwright
+          playwright install
 
       - name: Python実行
         run: |
