@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>SF6 Match Data</h1>
+
+<button onclick="load()">Load</button>
+
+<ul id="list"></ul>
+
+<script>
+async function load() {
+
+    const res = await fetch("/battle_logs");
+    const data = await res.json();
+
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    data.forEach(row => {
+        const li = document.createElement("li");
+        li.innerText = row;
+        list.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
