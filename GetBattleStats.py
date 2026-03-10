@@ -8,7 +8,7 @@ import os
 act = "11"
 # 保存先のSQLiteデータベースパス
 db_path = os.path.join(act, "battle_stats.db")
-window_check = False
+window_check = True
 
 with sync_playwright() as p:  # Playwrightを使用してブラウザを自動制御
     browser = p.chromium.launch(headless=window_check)  # Chromiumブラウザを起動（ヘッドレスモード）

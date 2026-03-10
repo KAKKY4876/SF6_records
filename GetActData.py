@@ -6,7 +6,7 @@ import sqlite3
 
 # 保存先のSQLiteデータベースパス
 db_path = os.path.join("act.db")
-window_check = False
+window_check = True
 
 with sqlite3.connect(db_path) as conn:
     cursor = conn.cursor()
