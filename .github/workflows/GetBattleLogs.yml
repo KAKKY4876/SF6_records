@@ -24,4 +24,4 @@ jobs:
 
       - name: Python実行
         run: |
-          python GetBattleLog.py
+          python GetBattleLogs.py
