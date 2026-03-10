@@ -1,8 +1,9 @@
 import sqlite3
 
 try:
+    act = input("actを入力してください: ")
     # battle_logs.db に接続
-    conn = sqlite3.connect('11/battle_logs.db')
+    conn = sqlite3.connect(f'{act}/battle_logs.db')
     cursor = conn.cursor()
 
     # battle_logs テーブルが存在するかチェック

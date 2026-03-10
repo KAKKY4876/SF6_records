@@ -1,9 +1,10 @@
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path("11") / "battle_stats.db"
+def print_battle_stats_db():
 
-def print_battle_stats_db(path=DB_PATH):
+    act = input("actを入力してください: ")
+    path = Path(act) / "battle_stats.db"
     if not path.exists():
         print(f"DBが見つかりません: {path}")
         return

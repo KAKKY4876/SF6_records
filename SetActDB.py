@@ -2,8 +2,8 @@ import json
 import sqlite3
 from pathlib import Path
 
-ACT_JSON = Path("c:\\Users\\kakim\\Desktop\\SF6_records\\act.json")
-ACT_DB = Path("c:\\Users\\kakim\\Desktop\\SF6_records\\act.db")
+ACT_JSON = Path("SF6_records\\act.json")
+ACT_DB = Path("SF6_records\\act.db")
 
 def init_act_db(path=ACT_DB):
     with sqlite3.connect(path) as conn:
