@@ -26,8 +26,5 @@ jobs:
 
       - name: Python1
         run: |
-          python GetBattleStats.py      
-      
-      - name: Python2
-        run: |
-          python GetActData.py
+          python get_act_data.py
+          python get_battle_stats.py

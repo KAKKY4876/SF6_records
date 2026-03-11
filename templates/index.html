@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html>
-<body>
 
 <head>
+    <meta charset="UTF-8">
     <title>SF6 Records</title>
     <link rel="icon" href="/static/favicon.ico">
 </head>
 
-<h1>SF6 Records</h1>
+<body style="background-color:#ccc0ef;">
 
-<button onclick="load()">Load</button>
+    <h1 style="text-align:center; font-size:40px; font-weight:bold; margin:20px;">
+        SF6 Records
+    </h1>
 
-<ul id="list"></ul>
+    <div style="text-align:center">
 
-<script>
-async function load() {
+        <input id="player_id" type="text" style="width:400px" placeholder="Player ID">
 
-    const res = await fetch("/battle_logs");
-    const data = await res.json();
+        <button onclick="search()">検索</button>
 
-    const list = document.getElementById("list");
-    list.innerHTML = "";
+    </div>
 
-    data.forEach(row => {
-        const li = document.createElement("li");
-        li.innerText = row;
-        list.appendChild(li);
-    });
-}
-</script>
+    <script>
+
+        function search() {
+
+            const id = document.getElementById("player_id").value;
+
+            window.location.href = "/" + id;
+
+        }
+
+    </script>
 
 </body>
+
 </html>

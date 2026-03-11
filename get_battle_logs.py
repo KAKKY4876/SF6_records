@@ -2,17 +2,39 @@ from playwright.sync_api import sync_playwright
 import sqlite3
 import time
 import os
+from get_db import GetDB
 
 waitTime = 500
 max_page = 10
-window_check = True
+window_check = False
 
-def get_battle_logs(act_list, index):
-    act_data = act_list[index]  # 指定されたインデックスのアクトデータを取得
+def main():
+    act_list, index = get_act_data()
+    player_list = GetDB.get_players()
+
+    for player in player_list:
+        get_battle_logs(player, act_list, index)
+
+
+def get_act_data():
+    act_list = GetDB.get_act_list()
+    index = len(act_list) - 1
+    return act_list, index
+
+
+def get_personal_logs(player):
+    act_list, index = get_act_data()
+    get_battle_logs(player, act_list, index)
+
+
+def get_battle_logs(player, act_list, index):
+    act = act_list[index]  # 指定されたインデックスのアクトデータを取得
     included_old = False  # 古いデータが含まれたかどうかを追跡するフラグ
-    startline = act_data["startline"]  # アクト開始日時をパース
-    deadline = act_data["deadline"]  # アクト終了日時をパース
-    db_path = os.path.join(str(act_data["act"]), "battle_logs.db")  # バトルログを保存するSQLiteデータベースのパスを設定
+    startline = act["startline"]  # アクト開始日時をパース
+    deadline = act["deadline"]  # アクト終了日時をパース
+    db_dir = f"players/{player}/{act['act']}"
+    os.makedirs(db_dir, exist_ok=True)
+    db_path = os.path.join(db_dir, "battle_logs.db")  # バトルログを保存するSQLiteデータベースのパスを設定
     end = False  # ループを終了するかどうかを示すフラグ
     new_battle_logs = []  # 新しく取得したバトルログを格納するリスト
 
@@ -40,7 +62,7 @@ def get_battle_logs(act_list, index):
                 p2_character TEXT,
                 p2_result TEXT
             )''')
-            cursor.execute('SELECT replay_id FROM battle_logs ORDER BY id DESC LIMIT 1')
+            cursor.execute('SELECT replay_id FROM battle_logs ORDER BY date DESC LIMIT 1')
             existing = cursor.fetchone()
             existing_id = existing[0] if existing else None  # 既存の最新リプレイIDを取得
     else:  # データベースが存在しない場合
@@ -58,7 +80,7 @@ def get_battle_logs(act_list, index):
         for _ in range(10000):
             try:
                 page.goto(
-                    "https://www.streetfighter.com/6/buckler/ja-jp/profile/3396222654/",
+                    f"https://www.streetfighter.com/6/buckler/ja-jp/profile/{player}/",
                     wait_until="domcontentloaded",
                     timeout=60000
                 )
@@ -214,19 +236,7 @@ def get_battle_logs(act_list, index):
         print("")
 
     if included_old:  # 古いデータが含まれた場合
-        get_battle_logs(act_list, index - 1)  # 前のアクトのデータも取得（再帰呼び出し）
+        get_battle_logs(player, act_list, index - 1)  # 前のアクトのデータも取得（再帰呼び出し）
 
-act_list = [
-    {
-        "act": 10,
-        "startline": 1761980400,
-        "deadline": 1769929140
-    },
-    {
-        "act": 11,
-        "startline": 1769929200,
-        "deadline": 1777618740
-    }
-]
-
-get_battle_logs(act_list, 1)
+if __name__ == "__main__":
+    main()
