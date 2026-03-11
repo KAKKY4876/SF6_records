@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Player {player_id}</h1>
+    <h1 id="player_name"></h1>
 
     <table border="1" id="table">
 
@@ -19,11 +19,12 @@
                 <th>Date</th>
                 <th>Match</th>
                 <th>P1</th>
-                <th></th>
-                <th>Character</th>
+                <th>P1 Type</th>
+                <th>P1 Character</th>
                 <th>P2</th>
-                <th></th>
-                <th>Character</th>
+                <th>P2 Type</th>
+                <th>P2 Character</th>
+                <th>Result</th>
             </tr>
         </thead>
 
@@ -45,21 +46,23 @@
 
             tbody.innerHTML = "";
 
-            data.forEach(row => {
+            document.getElementById("player_name").innerText =
+                data.player_name + " (" + playerId + ")";
+
+            data.battle_logs.forEach(row => {
 
                 const tr = document.createElement("tr");
 
-                const replayId = row[0]
-                const datetime = row[1]
-                const match = row[2]
-                const p1_name = row[5]
-                const p1_type = row[7]
-                const p1_character = row[8]
-                const p2_name = row[12]
-                const p2_type = row[14]
-                const p2_character = row[15]
-
-                
+                const replayId = row.replay_id;
+                const datetime = row.date;
+                const match = row.match;
+                const p1_name = row.p1_name;
+                const p1_type = row.p1_type;
+                const p1_character = row.p1_character;
+                const p2_name = row.p2_name;
+                const p2_type = row.p2_type;
+                const p2_character = row.p2_character;
+                const result = row.win_or_lose ? "Win" : "Lose";
 
                 tr.innerHTML =
                     `
@@ -72,14 +75,15 @@
         <td>${p2_name}</td>
         <td>${p2_type}</td>
         <td>${p2_character}</td>
-        `
+        <td>${result}</td>
+        `;
 
-                tbody.appendChild(tr)
+                tbody.appendChild(tr);
 
-            })
+            });
 
         }
-
+        
         load()
 
     </script>

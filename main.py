@@ -16,7 +16,7 @@ def get_battlelogs(player_id: str):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
     cur.execute("""
-        SELECT 
+        SELECT
         replay_id,
         date,
         match,
@@ -42,7 +42,55 @@ def get_battlelogs(player_id: str):
 
     conn.close()
 
-    return rows
+    battle_logs = []
+
+    for row in rows:
+
+        p1_result = json.loads(row[9])
+        p2_result = json.loads(row[16])
+        
+        if row[6] == player_id:
+            win_count = sum(1 for x in p1_result if x != 0)
+        elif row[13] == player_id:
+            win_count = sum(1 for x in p2_result if x != 0)
+        else:
+            continue
+
+        if win_count >= 2:
+            win_or_lose = True
+        else:
+            win_or_lose = False
+
+        battle_logs.append({
+            "replay_id": row[0],
+            "date": row[1],
+            "match": row[2],
+            "p1_league_point": row[3],
+            "p1_master_rating": row[4],
+            "p1_name": row[5],
+            "p1_player_id": row[6],
+            "p1_type": row[7],
+            "p1_character": row[8],
+            "p1_result": p1_result,
+            "p2_league_point": row[10],
+            "p2_master_rating": row[11],
+            "p2_name": row[12],
+            "p2_player_id": row[13],
+            "p2_type": row[14],
+            "p2_character": row[15],
+            "p2_result": p2_result,
+            "win_or_lose": win_or_lose
+        })
+
+    if player_id == battle_logs[-1]["p1_player_id"]:
+        player_name = battle_logs[-1]["p1_name"] if battle_logs else "Unknown Player"
+    else:
+        player_name = battle_logs[-1]["p2_name"] if battle_logs else "Unknown Player"
+
+    return {
+        "player_name": player_name,
+        "battle_logs": battle_logs
+    }
 
 
 @app.get("/", response_class=HTMLResponse)
