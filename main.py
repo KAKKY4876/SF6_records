@@ -61,7 +61,7 @@ def player_page(player_id: str):
 
     return html
 """
-    uvicorn main:app --reload
+    py -m uvicorn main:app --reload
 """
 
 """
