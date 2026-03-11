@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>SF6 Records</title>
+    <link rel="icon" href="/static/favicon.ico">
+</head>
+
+<body>
+
+    <h1>Player {player_id}</h1>
+
+    <table border="1" id="table">
+
+        <thead>
+            <tr>
+                <th>Replay ID</th>
+                <th>Date</th>
+                <th>Match</th>
+                <th>P1</th>
+                <th></th>
+                <th>Character</th>
+                <th>P2</th>
+                <th></th>
+                <th>Character</th>
+            </tr>
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+    <script>
+
+        async function load() {
+
+            const playerId = "{player_id}";
+
+            const res = await fetch(`/battle_logs/${playerId}`);
+
+            const data = await res.json();
+
+            const tbody = document.querySelector("#table tbody");
+
+            tbody.innerHTML = "";
+
+            data.forEach(row => {
+
+                const tr = document.createElement("tr");
+
+                const replayId = row[0]
+                const datetime = row[1]
+                const match = row[2]
+                const p1_name = row[5]
+                const p1_type = row[7]
+                const p1_character = row[8]
+                const p2_name = row[12]
+                const p2_type = row[14]
+                const p2_character = row[15]
+
+                
+
+                tr.innerHTML =
+                    `
+        <td>${replayId}</td>
+        <td>${datetime}</td>
+        <td>${match}</td>
+        <td>${p1_name}</td>
+        <td>${p1_type}</td>
+        <td>${p1_character}</td>
+        <td>${p2_name}</td>
+        <td>${p2_type}</td>
+        <td>${p2_character}</td>
+        `
+
+                tbody.appendChild(tr)
+
+            })
+
+        }
+
+        load()
+
+    </script>
+
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 import sqlite3
+import json
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -14,7 +15,6 @@ def get_battlelogs(player_id: str):
 
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
-
     cur.execute("""
         SELECT 
         replay_id,
@@ -51,15 +51,17 @@ def index():
         return f.read()
     
 
-@app.get("/{player_id}", response_class=HTMLResponse)
+@app.get("/{player_id}/battle_logs", response_class=HTMLResponse)
 def player_page(player_id: str):
 
-    with open("templates/player.html", encoding="utf-8") as f:
+    with open("templates/battle_logs.html", encoding="utf-8") as f:
         html = f.read()
 
     html = html.replace("{player_id}", player_id)
 
     return html
+
+
 """
     py -m uvicorn main:app --reload
 """

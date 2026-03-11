@@ -28,7 +28,17 @@
 
             const id = document.getElementById("player_id").value;
 
-            window.location.href = "/" + id;
+            if(id === "") return;
+
+            window.location.href = "/" + id + "/battle_logs";
+
+        }
+
+        function enterSearch(e){
+
+            if(e.key === "Enter"){
+                search();
+            }
 
         }
 
