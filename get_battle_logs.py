@@ -4,10 +4,6 @@ import time
 import os
 from get_db import GetDB
 
-waitTime = 500
-max_page = 10
-window_check = False
-
 def main():
     act_list, index = get_act_data()
     player_list = GetDB.get_players()
@@ -70,7 +66,7 @@ def get_battle_logs(player, act_list, index):
         existing_id = None
 
     with sync_playwright() as p:  # Playwrightを使用してブラウザを自動制御
-        browser = p.chromium.launch(headless=window_check)  # Chromiumブラウザを起動（ヘッドレスモード）
+        browser = p.chromium.launch(headless=False)  # Chromiumブラウザを起動（ヘッドレスモード）
         context = browser.new_context(  # 認証情報とカスタムユーザーエージェントを設定してコンテキストを作成
             storage_state="auth.json",
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
@@ -90,7 +86,7 @@ def get_battle_logs(player, act_list, index):
                 time.sleep(3)
         
         i = 0  # ページ番号のカウント
-        while i <= max_page:  # ページをループして全バトルログを取得
+        while i <= 10:  # ページをループして全バトルログを取得
             i += 1
             if i == 1:  # 最初のページは直接アクセスしているため、URLに"battlelog.json"が含まれない
                 with page.expect_response(lambda r: "battlelog.json" in r.url, timeout=10000) as res_info: # レスポンスを待機（URLに"battlelog.json"を含むもの）
