@@ -27,3 +27,11 @@ jobs:
       - name: Python実行
         run: |
           python get_battle_logs.py
+
+      - name: DBをコミット＆push
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add players/
+          git commit -m "update battle logs" || echo "no changes"
+          git push

@@ -24,7 +24,15 @@ jobs:
           pip install playwright
           playwright install
 
-      - name: Python1
+      - name: Python実行
         run: |
           python get_act_data.py
           python get_battle_stats.py
+
+      - name: DBをコミット＆push
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add players/ act.db players.db
+          git commit -m "update battle stats" || echo "no changes"
+          git push
