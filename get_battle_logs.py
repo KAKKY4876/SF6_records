@@ -66,7 +66,7 @@ def get_battle_logs(player, act_list, index):
         existing_id = None
 
     with sync_playwright() as p:  # Playwrightを使用してブラウザを自動制御
-        browser = p.chromium.launch(headless=False)  # Chromiumブラウザを起動（ヘッドレスモード）
+        browser = p.chromium.launch(headless=True)  # Chromiumブラウザを起動（ヘッドレスモード）
         context = browser.new_context(  # 認証情報とカスタムユーザーエージェントを設定してコンテキストを作成
             storage_state="auth.json",
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
