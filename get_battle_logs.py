@@ -110,6 +110,9 @@ def get_battle_logs(player, act_list, index):
             data = response.json() # JSONデータを取得
             replay_list = data["pageProps"]["replay_list"]  # バトルログのリストを取得
             rows = len(replay_list)  # 現在のページのバトルログ行数を取得
+            if rows == 0:  # バトルログが存在しない場合
+                end = True  # ループを終了
+                break  # ループを終了
 
             for j in range(rows):  # 各バトルログ行をループして処理
                 battle = replay_list[j]  # 指定したバトルデータを取得
