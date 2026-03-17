@@ -7,65 +7,125 @@
     <link rel="icon" href="/static/favicon.ico">
 </head>
 
-<body>
+<body vh-100 d-flex flex-column>
 
     <h1 id="player_name"></h1>
 
-    <table border="1" id="table">
+    <turbo-frame data-turbo-action="advance">
+        <nav class="py-3">
+            <ul nav nav-fill nav-underline>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/{player_id}/battle_logs">battlelog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/{player_id}/winrates">winrates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/{player_id}/rank_graph">rank graph</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/{player_id}/stats">stats</a>
+                </li>
+            </ul>
+        </nav>
 
-        <thead>
-            <tr>
-                <th>Replay ID</th>
-                <th>Date</th>
-                <th>Match</th>
-                <th>P1</th>
-                <th>P1 Type</th>
-                <th>P1 Character</th>
-                <th>P2</th>
-                <th>P2 Type</th>
-                <th>P2 Character</th>
-                <th>Result</th>
-            </tr>
-        </thead>
+        <form action accept-charset="UTF-8" method="get">
+            <div class="row">
+                <div class="col-md-3 md-3">
+                    <div class "form-floating">
+                        <select class="form-select" name="home_character_id" id="home_character_id">
+                            <option value="">全て</option>
+                            <option value="1">リュウ</option>
+                            <option value="2">ルーク</option>
+                            <option value="3">キンバリー</option>
+                            <option value="4">春麗</option>
+                            <option value="5">マノン</option>
+                            <option value="6">ザンギエフ</option>
+                            <option value="7">JP</option>
+                            <option value="8">ダルシム</option>
+                            <option value="9">キャミィ</option>
+                            <option value="10">ケン</option>
+                            <option value="11">ディージェイ</option>
+                            <option value="12">リリー</option>
+                            <option value="13">A.K.I.</option>
+                            <option value="14">ラシード</option>
+                            <option value="15">ブランカ</option>
+                            <option value="16">ジュリ</option>
+                            <option value="17">マリーザ</option>
+                            <option value="18">ガイル</option>
+                            <option value="19">ED</option>
+                            <option value="20">本田</option>
+                            <option value="21">ジェイミー</option>
+                            <option value="22">豪鬼</option>
+                            <option value="25">サガット</option>
+                            <option value="26">ベガ</option>
+                            <option value="27">テリー</option>
+                            <option value="28">舞</option>
+                            <option value="29">エレナ</option>
+                            <option value="30">C.ヴァイパー</option>
+                            <option value="254">ランダム</option>
+                        </select>
+                        <label for="home_character_id">私のキャラクター</label>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-        <tbody></tbody>
+        <table border="1" id="table">
 
-    </table>
+            <thead>
+                <tr>
+                    <th>Replay ID</th>
+                    <th>Date</th>
+                    <th>Match</th>
+                    <th>P1</th>
+                    <th>P1 Type</th>
+                    <th>P1 Character</th>
+                    <th>P2</th>
+                    <th>P2 Type</th>
+                    <th>P2 Character</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
 
-    <script>
+            <tbody></tbody>
 
-        async function load() {
+        </table>
 
-            const playerId = "{player_id}";
+        <script>
 
-            const res = await fetch(`/battle_logs/${playerId}`);
+            async function load() {
 
-            const data = await res.json();
+                const playerId = "{player_id}";
 
-            const tbody = document.querySelector("#table tbody");
+                const res = await fetch(`/battle_logs/${playerId}`);
 
-            tbody.innerHTML = "";
+                const data = await res.json();
 
-            document.getElementById("player_name").innerText =
-                data.player_name + " (" + playerId + ")";
+                const tbody = document.querySelector("#table tbody");
 
-            data.battle_logs.forEach(row => {
+                tbody.innerHTML = "";
 
-                const tr = document.createElement("tr");
+                document.getElementById("player_name").innerText =
+                    data.player_name + " (" + playerId + ")";
 
-                const replayId = row.replay_id;
-                const datetime = row.date;
-                const match = row.match;
-                const p1_name = row.p1_name;
-                const p1_type = row.p1_type;
-                const p1_character = row.p1_character;
-                const p2_name = row.p2_name;
-                const p2_type = row.p2_type;
-                const p2_character = row.p2_character;
-                const result = row.win_or_lose ? "Win" : "Lose";
+                data.battle_logs.forEach(row => {
 
-                tr.innerHTML =
-                    `
+                    const tr = document.createElement("tr");
+
+                    const replayId = row.replay_id;
+                    const datetime = row.date;
+                    const match = row.match;
+                    const p1_name = row.p1_name;
+                    const p1_type = row.p1_type;
+                    const p1_character = row.p1_character;
+                    const p2_name = row.p2_name;
+                    const p2_type = row.p2_type;
+                    const p2_character = row.p2_character;
+                    const result = row.win_or_lose ? "Win" : "Lose";
+
+                    tr.innerHTML =
+                        `
         <td>${replayId}</td>
         <td>${datetime}</td>
         <td>${match}</td>
@@ -78,15 +138,17 @@
         <td>${result}</td>
         `;
 
-                tbody.appendChild(tr);
+                    tbody.appendChild(tr);
 
-            });
+                });
 
-        }
-        
-        load()
+            }
 
-    </script>
+            load()
+
+        </script>
+
+    </turbo-frame>
 
 </body>
 
