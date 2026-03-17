@@ -64,7 +64,7 @@ def get_battlelogs(player_id: str):
 
         battle_logs.append({
             "replay_id": row[0],
-            "date": datetime.fromtimestamp(row[1]).strftime("%Y-%m-%d %H:%M:%S"),
+            "date": datetime.fromtimestamp(int(row[1])).strftime("%Y-%m-%d %H:%M:%S"),
             "match": row[2],
             "p1_league_point": row[3],
             "p1_master_rating": row[4],
