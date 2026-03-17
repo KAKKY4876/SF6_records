@@ -1,5 +1,6 @@
 import sqlite3
 import json
+from datetime import datetime
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -63,7 +64,7 @@ def get_battlelogs(player_id: str):
 
         battle_logs.append({
             "replay_id": row[0],
-            "date": row[1],
+            "date": datetime.fromtimestamp(row[1]).strftime("%Y-%m-%d %H:%M:%S"),
             "match": row[2],
             "p1_league_point": row[3],
             "p1_master_rating": row[4],
