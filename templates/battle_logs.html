@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SF6 Records</title>
     <link rel="icon" href="/static/favicon.ico">
 
@@ -12,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
 </head>
 
-<body vh-100 d-flex flex-column>
+<body class="vh-100 d-flex flex-column">
     <main id="main" class="container my-3 flex-fill">
         <h1 class="text-center mb-4">
             <a id="player_link" target="_blank"></a>
@@ -150,121 +151,119 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" value="" type="date" name="played_from"
-                                    id="played_from" />
+                                <input class="form-control" value="" type="date" name="played_from" id="played_from" />
                                 <label for="played_from">始日</label>
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" value="" type="date" name="played_to"
-                                    id="played_to" />
+                                <input class="form-control" value="" type="date" name="played_to" id="played_to" />
                                 <label for="played_to">了日</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="submit" name="" value="検索" class="btn btn-primary" data-disable-with="検索" />
-                            <a data-turbo-prefetch="false" class="btn btn-secondary"
+                            <input type="submit" name="" value="検索" class="btn btn-primary w-100 mb-2" data-disable-with="検索" />
+                            <a data-turbo-prefetch="false" class="btn btn-secondary w-100 mb-2"
                                 href="/{player_id}/battle_logs">リセット</a>
                         </div>
                     </div>
                 </form>
             </div>
+            <div class="table-responsive">
+                <table border="1" id="table" class="table table-striped text-center">
+                    <thead>
+                        <th colspan="3">私</th>
+                        <th>勝負</th>
+                        <th colspan="3">相手</th>
+                        <th>ゲームモード</th>
+                        <th>リプレイID</th>
+                        <th>試合日</th>
+                    </thead>
 
-            <table border="1" id="table" class="table table-striped text-center text-nowrap">
-                <thead>
-                    <th colspan="3">私</th>
-                    <th>勝負</th>
-                    <th colspan="3">相手</th>
-                    <th>ゲームモード</th>
-                    <th>リプレイID</th>
-                    <th>試合日</th>
-                </thead>
+                    <tbody></tbody>
 
-                <tbody></tbody>
+                    <script>
 
-                <script>
+                        async function load() {
 
-                    async function load() {
+                            const playerId = "{player_id}";
 
-                        const playerId = "{player_id}";
+                            // URLから現在のパラメータ取得
+                            const urlParams = new URLSearchParams(window.location.search);
 
-                        // URLから現在のパラメータ取得
-                        const urlParams = new URLSearchParams(window.location.search);
+                            const page = parseInt(urlParams.get("page")) || 1;
 
-                        const page = parseInt(urlParams.get("page")) || 1;
+                            // フォームの値（URL優先）
+                            const home_character_id = urlParams.get("home_character_id") ?? document.getElementById("home_character_id").value;
+                            const home_input_type_id = urlParams.get("home_input_type_id") ?? document.getElementById("home_input_type_id").value;
+                            const away_character_id = urlParams.get("away_character_id") ?? document.getElementById("away_character_id").value;
+                            const away_input_type_id = urlParams.get("away_input_type_id") ?? document.getElementById("away_input_type_id").value;
+                            const battle_type_id = urlParams.get("battle_type_id") ?? document.getElementById("battle_type_id").value;
+                            const played_from = urlParams.get("played_from") ?? document.getElementById("played_from").value;
+                            const played_to = urlParams.get("played_to") ?? document.getElementById("played_to").value;
 
-                        // フォームの値（URL優先）
-                        const home_character_id = urlParams.get("home_character_id") ?? document.getElementById("home_character_id").value;
-                        const home_input_type_id = urlParams.get("home_input_type_id") ?? document.getElementById("home_input_type_id").value;
-                        const away_character_id = urlParams.get("away_character_id") ?? document.getElementById("away_character_id").value;
-                        const away_input_type_id = urlParams.get("away_input_type_id") ?? document.getElementById("away_input_type_id").value;
-                        const battle_type_id = urlParams.get("battle_type_id") ?? document.getElementById("battle_type_id").value;
-                        const played_from = urlParams.get("played_from") ?? document.getElementById("played_from").value;
-                        const played_to = urlParams.get("played_to") ?? document.getElementById("played_to").value;
+                            // URLに反映（ここ重要）
+                            const params = new URLSearchParams({
+                                page,
+                                home_character_id,
+                                home_input_type_id,
+                                away_character_id,
+                                away_input_type_id,
+                                battle_type_id,
+                                played_from,
+                                played_to
+                            });
 
-                        // URLに反映（ここ重要）
-                        const params = new URLSearchParams({
-                            page,
-                            home_character_id,
-                            home_input_type_id,
-                            away_character_id,
-                            away_input_type_id,
-                            battle_type_id,
-                            played_from,
-                            played_to
-                        });
+                            history.pushState(null, "", "?" + params.toString());
 
-                        history.pushState(null, "", "?" + params.toString());
+                            const res = await fetch(`/battle_logs/${playerId}?` + params.toString());
+                            const data = await res.json();
 
-                        const res = await fetch(`/battle_logs/${playerId}?` + params.toString());
-                        const data = await res.json();
+                            // フォームに値を戻す（UX向上）
+                            document.getElementById("home_character_id").value = home_character_id || "";
+                            document.getElementById("home_input_type_id").value = home_input_type_id || "";
+                            document.getElementById("away_character_id").value = away_character_id || "";
+                            document.getElementById("away_input_type_id").value = away_input_type_id || "";
+                            document.getElementById("battle_type_id").value = battle_type_id || "";
+                            document.getElementById("played_from").value = played_from || "";
+                            document.getElementById("played_to").value = played_to || "";
 
-                        // フォームに値を戻す（UX向上）
-                        document.getElementById("home_character_id").value = home_character_id || "";
-                        document.getElementById("home_input_type_id").value = home_input_type_id || "";
-                        document.getElementById("away_character_id").value = away_character_id || "";
-                        document.getElementById("away_input_type_id").value = away_input_type_id || "";
-                        document.getElementById("battle_type_id").value = battle_type_id || "";
-                        document.getElementById("played_from").value = played_from || "";
-                        document.getElementById("played_to").value = played_to || "";
+                            const tbody = document.querySelector("#table tbody");
+                            tbody.innerHTML = "";
 
-                        const tbody = document.querySelector("#table tbody");
-                        tbody.innerHTML = "";
+                            const link = document.getElementById("player_link");
+                            link.innerText = data.player_name + " (" + playerId + ")";
+                            link.href = `https://www.streetfighter.com/6/buckler/ja-jp/profile/${playerId}`;
 
-                        const link = document.getElementById("player_link");
-                        link.innerText = data.player_name + " (" + playerId + ")";
-                        link.href = `https://www.streetfighter.com/6/buckler/ja-jp/profile/${playerId}`;
+                            data.battle_logs.forEach(row => {
+                                const tr = document.createElement("tr");
 
-                        data.battle_logs.forEach(row => {
-                            const tr = document.createElement("tr");
+                                const result = row.win_or_lose ? "Win" : "Lose";
 
-                            const result = row.win_or_lose ? "Win" : "Lose";
+                                let my_name, my_type, my_character;
+                                let opponent_name, opponent_type, opponent_character, opponent_player_id;
 
-                            let my_name, my_type, my_character;
-                            let opponent_name, opponent_type, opponent_character, opponent_player_id;
+                                if (row.p1_player_id === playerId) {
+                                    my_name = row.p1_name;
+                                    my_type = row.p1_type;
+                                    my_character = row.p1_character;
+                                    opponent_name = row.p2_name;
+                                    opponent_type = row.p2_type;
+                                    opponent_character = row.p2_character;
+                                    opponent_player_id = row.p2_player_id;
+                                } else {
+                                    my_name = row.p2_name;
+                                    my_type = row.p2_type;
+                                    my_character = row.p2_character;
+                                    opponent_name = row.p1_name;
+                                    opponent_type = row.p1_type;
+                                    opponent_character = row.p1_character;
+                                    opponent_player_id = row.p1_player_id;
+                                }
 
-                            if (row.p1_player_id === playerId) {
-                                my_name = row.p1_name;
-                                my_type = row.p1_type;
-                                my_character = row.p1_character;
-                                opponent_name = row.p2_name;
-                                opponent_type = row.p2_type;
-                                opponent_character = row.p2_character;
-                                opponent_player_id = row.p2_player_id;
-                            } else {
-                                my_name = row.p2_name;
-                                my_type = row.p2_type;
-                                my_character = row.p2_character;
-                                opponent_name = row.p1_name;
-                                opponent_type = row.p1_type;
-                                opponent_character = row.p1_character;
-                                opponent_player_id = row.p1_player_id;
-                            }
-
-                            tr.innerHTML = `
+                                tr.innerHTML = `
                                 <td>${my_name}</td>
                                 <td>${my_type}</td>
                                 <td>${my_character}</td>
@@ -281,45 +280,46 @@
                                 <td>${row.date}</td>
                             `;
 
-                            tbody.appendChild(tr);
-                        });
+                                tbody.appendChild(tr);
+                            });
 
-                        // ページネーション
-                        const pagination = document.getElementById("pagination");
-                        pagination.innerHTML = "";
+                            // ページネーション
+                            const pagination = document.getElementById("pagination");
+                            pagination.innerHTML = "";
 
-                        const createLink = (p, text, active = false) => {
-                            const li = document.createElement("li");
-                            li.className = "page-item" + (active ? " active" : "");
+                            const createLink = (p, text, active = false) => {
+                                const li = document.createElement("li");
+                                li.className = "page-item" + (active ? " active" : "");
 
-                            const a = document.createElement("a");
-                            a.className = "page-link";
+                                const a = document.createElement("a");
+                                a.className = "page-link";
 
-                            const newParams = new URLSearchParams(params);
-                            newParams.set("page", p);
+                                const newParams = new URLSearchParams(params);
+                                newParams.set("page", p);
 
-                            a.href = "?" + newParams.toString();
-                            a.innerText = text;
+                                a.href = "?" + newParams.toString();
+                                a.innerText = text;
 
-                            li.appendChild(a);
-                            return li;
-                        };
+                                li.appendChild(a);
+                                return li;
+                            };
 
-                        if (page > 1) pagination.appendChild(createLink(page - 1, "<"));
+                            if (page > 1) pagination.appendChild(createLink(page - 1, "<"));
 
-                        for (let i = Math.max(1, page - 2); i <= Math.min(data.total_pages, page + 2); i++) {
-                            pagination.appendChild(createLink(i, i, i === page));
+                            for (let i = Math.max(1, page - 2); i <= Math.min(data.total_pages, page + 2); i++) {
+                                pagination.appendChild(createLink(i, i, i === page));
+                            }
+
+                            if (page < data.total_pages) pagination.appendChild(createLink(page + 1, ">"));
                         }
 
-                        if (page < data.total_pages) pagination.appendChild(createLink(page + 1, ">"));
-                    }
-
-                    load();
-                </script>
-            </table>
-            <nav class="pagy-bootstrap series-nav" aria-label="Pages">
-                <ul class="pagination" id="pagination"></ul>
-            </nav>
+                        load();
+                    </script>
+                </table>
+                <nav class="pagy-bootstrap series-nav" aria-label="Pages">
+                    <ul class="pagination" id="pagination"></ul>
+                </nav>
+            </div>
         </turbo-frame>
     </main>
 
