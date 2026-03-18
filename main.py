@@ -37,12 +37,12 @@ def get_battlelogs(
     # If any query params are missing, apply safe defaults so this endpoint can be called
     # with only ?page=... (used by frontend JS) or from the form.
     if not played_from:
-        played_from = "1970-01-01"
+        played_from = "1970-01-01T00:00:00"
     if not played_to:
         played_to = datetime.now(jst).strftime("%Y-%m-%d") + "T23:59:59"  # 今日の日付の23:59:59に設定
 
-    dt_from = datetime.strptime(played_from, "%Y-%m-%d").replace(tzinfo=jst)
-    dt_to = datetime.strptime(played_to, "%Y-%m-%d").replace(tzinfo=jst) + timedelta(days=1) - timedelta(seconds=1)
+    dt_from = datetime.strptime(played_from, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=jst)
+    dt_to = datetime.strptime(played_to, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=jst) + timedelta(days=1) - timedelta(seconds=1)
 
     from_ts = int(dt_from.timestamp())
     to_ts = int(dt_to.timestamp())
@@ -155,6 +155,7 @@ def player_page(player_id: str):
     html = html.replace("{player_id}", player_id)
 
     return html
+
 
 
 """
