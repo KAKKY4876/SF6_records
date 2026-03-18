@@ -128,9 +128,14 @@ def get_battlelogs(
 
     total_pages = (len(battle_logs) + limit - 1) // limit
 
+    # ページング: nページに20*(n-1)番目から20*n番目の要素を返す
+    start_index = 20 * (page - 1)
+    end_index = 20 * page
+    battle_logs_page = battle_logs[start_index:end_index]
+
     return {
         "player_name": player_name,
-        "battle_logs": battle_logs,
+        "battle_logs": battle_logs_page,
         "page": page,
         "total_pages": total_pages
     }
