@@ -39,7 +39,7 @@ def get_battlelogs(
     if not played_from:
         played_from = "1970-01-01"
     if not played_to:
-        played_to = datetime.now(jst).strftime("%Y-%m-%d")
+        played_to = datetime.now(jst).strftime("%Y-%m-%d") + "T23:59:59"  # 今日の日付の23:59:59に設定
 
     dt_from = datetime.strptime(played_from, "%Y-%m-%d").replace(tzinfo=jst)
     dt_to = datetime.strptime(played_to, "%Y-%m-%d").replace(tzinfo=jst) + timedelta(days=1) - timedelta(seconds=1)
@@ -99,7 +99,7 @@ def get_battlelogs(
 
         battle_logs.append({
             "replay_id": row[0],
-            "date": datetime.fromtimestamp(int(row[1])).strftime("%Y-%m-%d %H:%M:%S"),
+            "date": datetime.fromtimestamp(int(row[1]) + 32400).strftime("%Y-%m-%d %H:%M:%S"),
             "match": row[2],
             "p1_league_point": row[3],
             "p1_master_rating": row[4],
