@@ -211,20 +211,21 @@
                             const Act = "{act}"; // Act
                             const currentAct = Act;
 
-                            const urlParams = new URLSearchParams(window.location.search); // URLパラメータ取得
+                            // URLから現在のパラメータ取得
+                            const urlParams = new URLSearchParams(window.location.search);
 
-                            const page = parseInt(urlParams.get("page")) || 1; // ページ番号
+                            const page = parseInt(urlParams.get("page")) || 1;
 
-                            // 各フィルタ取得
-                            const home_character_id = urlParams.get("home_character_id") ?? "";
-                            const home_input_type_id = urlParams.get("home_input_type_id") ?? "";
-                            const away_character_id = urlParams.get("away_character_id") ?? "";
-                            const away_input_type_id = urlParams.get("away_input_type_id") ?? "";
-                            const battle_type_id = urlParams.get("battle_type_id") ?? "";
-                            const played_from = urlParams.get("played_from") ?? "";
-                            const played_to = urlParams.get("played_to") ?? "";
+                            // フォームの値（URL優先）
+                            const home_character_id = urlParams.get("home_character_id") ?? document.getElementById("home_character_id").value;
+                            const home_input_type_id = urlParams.get("home_input_type_id") ?? document.getElementById("home_input_type_id").value;
+                            const away_character_id = urlParams.get("away_character_id") ?? document.getElementById("away_character_id").value;
+                            const away_input_type_id = urlParams.get("away_input_type_id") ?? document.getElementById("away_input_type_id").value;
+                            const battle_type_id = urlParams.get("battle_type_id") ?? document.getElementById("battle_type_id").value;
+                            const played_from = urlParams.get("played_from") ?? document.getElementById("played_from").value;
+                            const played_to = urlParams.get("played_to") ?? document.getElementById("played_to").value;
 
-                            // URL更新
+                            // URLに反映（ここ重要）
                             const params = new URLSearchParams({
                                 page,
                                 home_character_id,
@@ -241,6 +242,15 @@
                             // API取得
                             const res = await fetch(`/battle_logs/${playerId}/${Act}?` + params.toString());
                             const data = await res.json();
+
+                            // フォームに値を戻す（UX向上）
+                            document.getElementById("home_character_id").value = home_character_id || "";
+                            document.getElementById("home_input_type_id").value = home_input_type_id || "";
+                            document.getElementById("away_character_id").value = away_character_id || "";
+                            document.getElementById("away_input_type_id").value = away_input_type_id || "";
+                            document.getElementById("battle_type_id").value = battle_type_id || "";
+                            document.getElementById("played_from").value = played_from || "";
+                            document.getElementById("played_to").value = played_to || "";
 
                             const select = document.getElementById("act_select");
 
@@ -321,6 +331,35 @@
 
                                 tbody.appendChild(tr);
                             });
+
+                            // ページネーション
+                            const pagination = document.getElementById("pagination");
+                            pagination.innerHTML = "";
+
+                            const createLink = (p, text, active = false) => {
+                                const li = document.createElement("li");
+                                li.className = "page-item" + (active ? " active" : "");
+
+                                const a = document.createElement("a");
+                                a.className = "page-link";
+
+                                const newParams = new URLSearchParams(params);
+                                newParams.set("page", p);
+
+                                a.href = "?" + newParams.toString();
+                                a.innerText = text;
+
+                                li.appendChild(a);
+                                return li;
+                            };
+
+                            if (page > 1) pagination.appendChild(createLink(page - 1, "<"));
+
+                            for (let i = Math.max(1, page - 2); i <= Math.min(data.total_pages, page + 2); i++) {
+                                pagination.appendChild(createLink(i, i, i === page));
+                            }
+
+                            if (page < data.total_pages) pagination.appendChild(createLink(page + 1, ">"));
                         }
 
                         load(); // 初回実行
