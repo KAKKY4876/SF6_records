@@ -152,6 +152,9 @@ def index():  # インデックスページ取得関数
 @app.get("/{player_id}/{act}/battle_logs", response_class=HTMLResponse)  # プレイヤーページエンドポイント定義
 def player_page(player_id: str, act: str):  # プレイヤーページ取得関数
 
+    if not os.path.exists(f"players/{player_id}/{act}/battle_logs.db"):  # データベースファイルが存在しない場合
+        return HTMLResponse(content="Battle logs not found.", status_code=404)  # 404エラーを返却
+
     with open("templates/battle_logs.html", encoding="utf-8") as f:  # バトルログテンプレートファイルを開く
         html = f.read()  # ファイル内容を読み込む
 
