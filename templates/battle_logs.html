@@ -331,8 +331,8 @@
                                 <td><a href="/battle/${row.replay_id}">${row.replay_id}</a></td>
                                 <td>
                                     <div style="display:flex; gap:10px;">
-                                        <input type="hidden" value="${row.replay_id}" id="copyText" readonly>
-                                        <button onclick="copyText()">copy</button>
+                                        <input type="hidden" value="${row.replay_id}" id="replay_${row.replay_id}">
+                                        <button onclick="copyText('replay_${row.replay_id}')">copy</button>
                                     </div>
                                 </td>
                                 <td>${row.date}</td>
@@ -373,14 +373,9 @@
 
                         load(); // 初回実行
 
-                        function copyText() {
-                            const text = document.getElementById("copyText").value;
-                            navigator.clipboard.writeText(text)
-                                .then(() => {
-                                    const btn = event.target;
-                                    btn.textContent = "✔ コピー済み";
-                                    setTimeout(() => btn.textContent = "📋 コピー", 1500);
-                                });
+                        function copyText(id) {
+                            const text = document.getElementById(id).value;
+                            navigator.clipboard.writeText(text).then();
                         }
                     </script>
                 </table>
