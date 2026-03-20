@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -15,43 +16,24 @@
 
 <body class="vh-100 d-flex flex-column">
     <main id="main" class="container my-3 flex-fill">
-        <!-- タイトル -->
-        <h1 style="text-align:center; font-size:clamp(24px, 6vw, 40px); font-weight:bold; margin:20px;">
-            <a href="/" class="text-decoration-none text-dark">
-                SF6 Records
-            </a>
-        </h1>
-
-        <!-- プレイヤーリンク表示 -->
         <h1 class="text-center mb-4">
             <a id="player_link" target="_blank"></a>
         </h1>
-
-        <!-- Act選択 -->
-        <div class="col-md-3 mb-3 mx-auto">
-            <div class="form-floating">
-                <select class="form-select" name="act_select" id="act_select">
-                    <!-- 動的に追加される -->
-                </select>
-                <label for="home_character_id">Act</label>
-            </div>
-        </div>
-
 
         <turbo-frame data-turbo-action="advance">
             <nav class="py-3">
                 <ul class="nav nav-fill nav-underline">
                     <li class="nav-item"><a class="nav-link active"
-                            href="/{player_id}/{act}/battle_logs?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">対戦</a>
+                            href="/3396222654/battle_logs?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">対戦</a>
                     </li>
                     <li class="nav-item"><a class="nav-link"
-                            href="/{player_id}/{act}/winrate?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">キャラ別統計</a>
+                            href="/3396222654/winrate?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">キャラ別統計</a>
                     </li>
                     <li class="nav-item"><a class="nav-link"
-                            href="/{player_id}/{act}/ranked_history?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">ランク統計</a>
+                            href="/3396222654/ranked_history?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">ランク統計</a>
                     </li>
                     <li class="nav-item"><a class="nav-link"
-                            href="/{player_id}/{act}/battle_stats?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">戦績</a>
+                            href="/3396222654/battle_stats?away_character_id=&amp;away_input_type_id=&amp;battle_type_id=&amp;home_character_id=&amp;home_input_type_id=&amp;played_from=&amp;played_to=&amp;">戦績</a>
                 </ul>
             </nav>
 
@@ -183,10 +165,9 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="submit" name="" value="検索" class="btn btn-primary w-100 mb-2"
-                                data-disable-with="検索" />
+                            <input type="submit" name="" value="検索" class="btn btn-primary w-100 mb-2" data-disable-with="検索" />
                             <a data-turbo-prefetch="false" class="btn btn-secondary w-100 mb-2"
-                                href="/{player_id}/{act}/battle_logs">リセット</a>
+                                href="/3396222654/battle_logs">リセット</a>
                         </div>
                     </div>
                 </form>
@@ -207,24 +188,24 @@
                     <script>
 
                         async function load() {
-                            const playerId = "{player_id}"; // プレイヤーID
-                            const Act = "{act}"; // Act
-                            const currentAct = Act;
 
-                            const urlParams = new URLSearchParams(window.location.search); // URLパラメータ取得
+                            const playerId = "3396222654";
 
-                            const page = parseInt(urlParams.get("page")) || 1; // ページ番号
+                            // URLから現在のパラメータ取得
+                            const urlParams = new URLSearchParams(window.location.search);
 
-                            // 各フィルタ取得
-                            const home_character_id = urlParams.get("home_character_id") ?? "";
-                            const home_input_type_id = urlParams.get("home_input_type_id") ?? "";
-                            const away_character_id = urlParams.get("away_character_id") ?? "";
-                            const away_input_type_id = urlParams.get("away_input_type_id") ?? "";
-                            const battle_type_id = urlParams.get("battle_type_id") ?? "";
-                            const played_from = urlParams.get("played_from") ?? "";
-                            const played_to = urlParams.get("played_to") ?? "";
+                            const page = parseInt(urlParams.get("page")) || 1;
 
-                            // URL更新
+                            // フォームの値（URL優先）
+                            const home_character_id = urlParams.get("home_character_id") ?? document.getElementById("home_character_id").value;
+                            const home_input_type_id = urlParams.get("home_input_type_id") ?? document.getElementById("home_input_type_id").value;
+                            const away_character_id = urlParams.get("away_character_id") ?? document.getElementById("away_character_id").value;
+                            const away_input_type_id = urlParams.get("away_input_type_id") ?? document.getElementById("away_input_type_id").value;
+                            const battle_type_id = urlParams.get("battle_type_id") ?? document.getElementById("battle_type_id").value;
+                            const played_from = urlParams.get("played_from") ?? document.getElementById("played_from").value;
+                            const played_to = urlParams.get("played_to") ?? document.getElementById("played_to").value;
+
+                            // URLに反映（ここ重要）
                             const params = new URLSearchParams({
                                 page,
                                 home_character_id,
@@ -238,44 +219,25 @@
 
                             history.pushState(null, "", "?" + params.toString());
 
-                            // API取得
-                            const res = await fetch(`/battle_logs/${playerId}/${Act}?` + params.toString());
+                            const res = await fetch(`/battle_logs/${playerId}?` + params.toString());
                             const data = await res.json();
 
-                            const select = document.getElementById("act_select");
+                            // フォームに値を戻す（UX向上）
+                            document.getElementById("home_character_id").value = home_character_id || "";
+                            document.getElementById("home_input_type_id").value = home_input_type_id || "";
+                            document.getElementById("away_character_id").value = away_character_id || "";
+                            document.getElementById("away_input_type_id").value = away_input_type_id || "";
+                            document.getElementById("battle_type_id").value = battle_type_id || "";
+                            document.getElementById("played_from").value = played_from || "";
+                            document.getElementById("played_to").value = played_to || "";
 
-                            const acts = data.acts; // Actリスト
-
-                            acts.forEach(act => {
-                                const option = document.createElement("option");
-                                option.value = act;
-                                option.textContent = act;
-
-                                if (String(act) === String(currentAct)) {
-                                    option.selected = true;
-                                }
-
-                                select.appendChild(option);
-                            });
-
-                            select.addEventListener("change", () => {
-                                const selectedAct = select.value; // ←これを使う！
-
-                                const params = new URLSearchParams(window.location.search);
-
-                                window.location.href = `/${playerId}/${selectedAct}/battle_logs?` + params.toString();
-                            });
-
-                            // テーブル初期化
                             const tbody = document.querySelector("#table tbody");
                             tbody.innerHTML = "";
 
-                            // プレイヤー名表示
                             const link = document.getElementById("player_link");
                             link.innerText = data.player_name + " (" + playerId + ")";
                             link.href = `https://www.streetfighter.com/6/buckler/ja-jp/profile/${playerId}`;
 
-                            // 行生成
                             data.battle_logs.forEach(row => {
                                 const tr = document.createElement("tr");
 
@@ -321,9 +283,38 @@
 
                                 tbody.appendChild(tr);
                             });
+
+                            // ページネーション
+                            const pagination = document.getElementById("pagination");
+                            pagination.innerHTML = "";
+
+                            const createLink = (p, text, active = false) => {
+                                const li = document.createElement("li");
+                                li.className = "page-item" + (active ? " active" : "");
+
+                                const a = document.createElement("a");
+                                a.className = "page-link";
+
+                                const newParams = new URLSearchParams(params);
+                                newParams.set("page", p);
+
+                                a.href = "?" + newParams.toString();
+                                a.innerText = text;
+
+                                li.appendChild(a);
+                                return li;
+                            };
+
+                            if (page > 1) pagination.appendChild(createLink(page - 1, "<"));
+
+                            for (let i = Math.max(1, page - 2); i <= Math.min(data.total_pages, page + 2); i++) {
+                                pagination.appendChild(createLink(i, i, i === page));
+                            }
+
+                            if (page < data.total_pages) pagination.appendChild(createLink(page + 1, ">"));
                         }
 
-                        load(); // 初回実行
+                        load();
                     </script>
                 </table>
                 <nav class="pagy-bootstrap series-nav" aria-label="Pages">

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="dark" data-controller="timezone">
+
+<head>
+
+</head>
+
+<body class="vh-100 d-flex flex-column">
+    <main id="main" class="container my-3 flex-fill">
+        <turbo-frame data-turbo-action="advance" id="fighter-content">
+
+            <nav class="py-3">
+                <ul class="nav nav-fill nav-underline">
+                    <li class="nav-item"><a class="nav-link" href="/fighters/2430585006/matches">対戦</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/fighters/2430585006/matchup_chart">キャラ別統計</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/fighters/2430585006/ranked_history">ランク統計</a></li>
+                </ul>
+            </nav>
+
+            <div class="card card-body mb-3">
+                <form action="" accept-charset="UTF-8" method="get">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="home_character_id" id="home_character_id">
+                                    <option value="">全て</option>
+                                    <option value="1">リュウ</option>
+                                    <option value="2">ルーク</option>
+                                    <option value="3">キンバリー</option>
+                                    <option value="4">春麗</option>
+                                    <option value="5">マノン</option>
+                                    <option value="6">ザンギエフ</option>
+                                    <option value="7">JP</option>
+                                    <option value="8">ダルシム</option>
+                                    <option value="9">キャミィ</option>
+                                    <option value="10">ケン</option>
+                                    <option value="11">ディージェイ</option>
+                                    <option value="12">リリー</option>
+                                    <option value="13">A.K.I.</option>
+                                    <option value="14">ラシード</option>
+                                    <option value="15">ブランカ</option>
+                                    <option value="16">ジュリ</option>
+                                    <option value="17">マリーザ</option>
+                                    <option value="18">ガイル</option>
+                                    <option value="19">ED</option>
+                                    <option value="20">本田</option>
+                                    <option value="21">ジェイミー</option>
+                                    <option value="22">豪鬼</option>
+                                    <option value="25">サガット</option>
+                                    <option value="26">ベガ</option>
+                                    <option value="27">テリー</option>
+                                    <option value="28">舞</option>
+                                    <option value="29">エレナ</option>
+                                    <option value="30">C.ヴァイパー</option>
+                                    <option value="31">アレックス</option>
+                                    <option value="254">ランダム</option>
+                                </select>
+                                <label for="home_character_id">私のキャラクター</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="home_input_type_id" id="home_input_type_id">
+                                    <option value="">全て</option>
+                                    <option value="0">C</option>
+                                    <option value="1">M</option>
+                                </select>
+                                <label for="home_input_type_id">私の操作タイプ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" name="battle_type_id" id="battle_type_id">
+                                    <option value="">全て</option>
+                                    <option value="1">ランクマッチ</option>
+                                    <option value="2">カジュアルマッチ</option>
+                                    <option value="3">バトルハブ</option>
+                                    <option value="4">カスタムルーム</option>
+                                </select>
+                                <label for="battle_type_id">ゲームモード</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" value="2026-03-12" type="date" name="played_from"
+                                    id="played_from" />
+                                <label for="played_from">始日</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" value="2026-03-19" type="date" name="played_to"
+                                    id="played_to" />
+                                <label for="played_to">了日</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="submit" name="" value="検索" class="btn btn-primary" data-disable-with="検索" />
+                            <a data-turbo-prefetch="false" class="btn btn-secondary"
+                                href="/fighters/2430585006/matchup_chart">リセット</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="card card-body table-responsive">
+                <table class="table table-striped text-center text-nowrap">
+                    <thead>
+                        <td>キャラクター</td>
+                        <td>操作タイプ</td>
+                        <td>合計</td>
+                        <td>勝利</td>
+                        <td>敗北</td>
+                        <td>引き分け</td>
+                        <td>勝利数</td>
+                        <td>勝率</td>
+                        <td><i class="bi bi-bar-chart-fill"></i></td>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>リュウ</td>
+                            <td>C</td>
+                            <td>6</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td><span class="">+0</span></td>
+                            <td><span class="">50.0</span></td>
+                            <td>
+                                <a data-turbo-frame="modal"
+                                    href="/fighters/2430585006/daily_results_chart?away_character_id=1&amp;away_input_type_id=0&amp;played_from=2026-03-12&amp;played_to=2026-03-19"><i
+                                        class="bi bi-bar-chart-fill"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>リュウ</td>
+                            <td>M</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td><span class="text-danger">-1</span></td>
+                            <td><span class="text-danger">0.0</span></td>
+                            <td>
+                                <a data-turbo-frame="modal"
+                                    href="/fighters/2430585006/daily_results_chart?away_character_id=1&amp;away_input_type_id=1&amp;played_from=2026-03-12&amp;played_to=2026-03-19"><i
+                                        class="bi bi-bar-chart-fill"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2">Σ</td>
+                            <td>227</td>
+                            <td>126</td>
+                            <td>101</td>
+                            <td>0</td>
+                            <td><span class="text-success">+25</span></td>
+                            <td><span class="">55.51</span></td>
+                            <td><a data-turbo-frame="modal"
+                                    href="/fighters/2430585006/daily_results_chart?played_from=2026-03-12&amp;played_to=2026-03-19"><i
+                                        class="bi bi-bar-chart-fill"></i></a></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+        </turbo-frame>
+    </main>
+</body>
+
+</html>

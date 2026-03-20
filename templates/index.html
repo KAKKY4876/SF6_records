@@ -1,56 +1,55 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> <!-- HTML5文書タイプ宣言 -->
+<html> <!-- ルート要素 -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SF6 Records</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
-    <link rel="icon" href="/static/favicon.ico">
+<head> <!-- メタデータ定義開始 -->
+    <meta charset="UTF-8"> <!-- 文字エンコーディング指定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- レスポンシブ対応 -->
+    <title>SF6 Records</title> <!-- ページタイトル -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png"> <!-- iOSアイコン -->
+    <link rel="icon" href="/static/favicon.ico"> <!-- favicon -->
 
-    <script async src="https://ga.jspm.io/npm:es-module-shims@2.6.2/dist/es-module-shims.js"></script>
-    <link rel="stylesheet" href="/assets/application-8776d86d.css" data-turbo-track="reload" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
-</head>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@2.6.2/dist/es-module-shims.js"></script> <!-- ESモジュールシム読み込み -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.css" /> <!-- Bootstrap CSS読み込み -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" /> <!-- BootstrapアイコンCSS読み込み -->
+</head> <!-- メタデータ定義終了 -->
 
-<body style="background-color:#ffffff;">
+<body style="background-color:#ffffff;"> <!-- ページ本体 -->
 
-    <h1 style="text-align:center; font-size:clamp(24px, 6vw, 40px); font-weight:bold; margin:20px;">
+    <h1 style="text-align:center; font-size:clamp(24px, 6vw, 40px); font-weight:bold; margin:20px;"> <!-- 見出し表示 -->
         SF6 Records
     </h1>
 
-    <div class="container text-center mt-4">
+    <div class="container text-center mt-4"> <!-- 入力フォームレイアウト -->
 
-        <input id="player_id" type="text" class="form-control mx-auto" style="max-width:400px;" placeholder="Player ID"
-            onkeydown="enterSearch(event)">
+        <input id="player_id" type="text" class="form-control mx-auto" style="max-width:400px;" placeholder="Player ID" onkeydown="enterSearch(event)"> <!-- プレイヤーID入力 -->
 
-        <button class="btn btn-primary mt-2" onclick="search()">検索</button>
+        <button class="btn btn-primary mt-2" onclick="search()">検索</button> <!-- 検索ボタン -->
 
     </div>
 
     <script>
 
-        function search() {
+        function search() { // 検索実行関数
 
-            const id = document.getElementById("player_id").value;
+            const id = document.getElementById("player_id").value; // 入力値取得
+            const act = "{act}"; // アクト値埋め込み
 
-            if (id === "") return;
+            if (id === "") return; // 空なら何もしない
 
-            window.location.href = "/" + id + "/battle_logs";
+            window.location.href = "/" + id + "/" + act + "/battle_logs"; // 遷移先URL設定
 
         }
 
-        function enterSearch(e) {
+        function enterSearch(e) { // Enterキーで検索呼び出し関数
 
             if (e.key === "Enter") {
-                search();
+                search(); // search()呼び出し
             }
 
         }
 
-    </script>
+    </script> <!-- JS処理終了 -->
 
 </body>
 
-</html>
+</html> <!-- HTML終了 -->
