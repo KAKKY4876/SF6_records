@@ -328,7 +328,11 @@
                                 <td>${opponent_type}</td>
                                 <td>${opponent_character}</td>
                                 <td>${row.match}</td>
-                                <td><a href="/battle/${row.replay_id}">${row.replay_id}</a></td>
+                                <td>
+                                    <a href="#" onclick="openBattle('${row.replay_id}'); return false;">
+                                        ${row.replay_id}
+                                    </a>
+                                </td>
                                 <td>
                                     <div style="display:flex; gap:10px;">
                                         <input type="hidden" value="${row.replay_id}" id="replay_${row.replay_id}">
@@ -377,6 +381,18 @@
                             const text = document.getElementById(id).value;
                             navigator.clipboard.writeText(text).then();
                         }
+
+                        function openBattle(replayId) {
+                            const iframe = document.getElementById("battleFrame");
+                            iframe.src = `/battle/${replayId}/`;
+                            document.getElementById("overlay").style.display = "flex";
+                        }
+
+                        function closeOverlay() {
+                            document.getElementById("overlay").style.display = "none";
+                            document.getElementById("battleFrame").src = "";
+                        }
+
                     </script>
                 </table>
                 <nav class="pagy-bootstrap series-nav" aria-label="Pages">

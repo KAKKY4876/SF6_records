@@ -24,37 +24,9 @@
         </a>
     </h1>
 
-    <div class="container text-center mt-4"> <!-- 入力フォームレイアウト -->
-
-        <input id="player_id" type="text" class="form-control mx-auto" style="max-width:400px;" placeholder="Player ID"
-            onkeydown="enterSearch(event)"> <!-- プレイヤーID入力 -->
-
-        <button class="btn btn-primary mt-2" onclick="search()">検索</button> <!-- 検索ボタン -->
-
-    </div>
-
-    <script>
-
-        function search() { // 検索実行関数
-
-            const id = document.getElementById("player_id").value; // 入力値取得
-            const act = "{act}"; // アクト値埋め込み
-
-            if (id === "") return; // 空なら何もしない
-
-            window.location.href = "/" + id + "/" + act + "/battle_logs"; // 遷移先URL設定
-
-        }
-
-        function enterSearch(e) { // Enterキーで検索呼び出し関数
-
-            if (e.key === "Enter") {
-                search(); // search()呼び出し
-            }
-
-        }
-
-    </script> <!-- JS処理終了 -->
+    <h1 class="text-center mb-4">
+        Not Found
+    </h1>
 
 </body>
 

@@ -35,16 +35,21 @@ def get_battlelogs(  # バトルログ取得関数
 
     jst = timezone(timedelta(hours=9))  # 日本標準時(JST)タイムゾーン設定
 
-    if not played_from:  # 開始日時未指定の場合
-        played_from = "1970-01-01T00:00:00"  # エポック時刻を開始日時に設定
-    if not played_to:  # 終了日時未指定の場合
-        played_to = datetime.now(jst).strftime("%Y-%m-%d") + "T23:59:59"  # 今日の日付の23:59:59に設定
+    if not played_from:
+        played_from = "1970-01-01T00:00:00"
+    elif len(played_from) == 10:
+        played_from += "T00:00:00"
 
-    dt_from = datetime.strptime(played_from, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=jst)  # 開始日時をdatetime形式に変換
-    dt_to = datetime.strptime(played_to, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=jst) + timedelta(days=1) - timedelta(seconds=1)  # 終了日時をdatetime形式に変換
+    if not played_to:
+        played_to = datetime.now(jst).strftime("%Y-%m-%dT23:59:59")
+    elif len(played_to) == 10:
+        played_to += "T23:59:59"
 
-    from_ts = int(dt_from.timestamp())  # 開始日時をタイムスタンプに変換
-    to_ts = int(dt_to.timestamp())  # 終了日時をタイムスタンプに変換
+    dt_from = datetime.strptime(played_from, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=jst)
+    dt_to = datetime.strptime(played_to, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=jst)
+
+    from_ts = int(dt_from.timestamp())
+    to_ts = int(dt_to.timestamp())
 
     # バトルログ取得SQLクエリ定義
     query = """
@@ -153,7 +158,9 @@ def index():  # インデックスページ取得関数
 def player_page(player_id: str, act: str):  # プレイヤーページ取得関数
 
     if not os.path.exists(f"players/{player_id}/{act}/battle_logs.db"):  # データベースファイルが存在しない場合
-        return HTMLResponse(content="Battle logs not found.", status_code=404)  # 404エラーを返却
+        with open("templates/not_found.html", encoding="utf-8") as f:  # データなしテンプレートファイルを開く
+            html = f.read()  # ファイル内容を読み込む
+        return html  # HTMLを返却
 
     with open("templates/battle_logs.html", encoding="utf-8") as f:  # バトルログテンプレートファイルを開く
         html = f.read()  # ファイル内容を読み込む
