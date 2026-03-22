@@ -207,115 +207,143 @@
 
                     <tbody></tbody>
 
-                    <script>
+                </table>
 
-                        async function load() {
-                            const playerId = "{player_id}"; // プレイヤーID
-                            const Act = "{act}"; // Act
-                            const currentAct = Act;
+                <div id="battleModal" class="modal hidden">
+                    <style>
+                        .modal {
+                            display: none;
+                            position: fixed;
+                            top: 20%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            background: white;
+                            padding: 20px;
+                            border: 1px solid #ccc;
+                            z-index: 1000;
+                        }
+                    </style>
+                    <div class="modal-content">
+                        <button onclick="closeModal()">&times;</button>
 
-                            // URLから現在のパラメータ取得
-                            const urlParams = new URLSearchParams(window.location.search);
+                        <h2>バトル詳細</h2>
+                        <div id="battleDetail"></div> <!-- ← これだけ残す -->
+                    </div>
+                </div>
+                <nav class="pagy-bootstrap series-nav" aria-label="Pages">
+                    <ul class="pagination" id="pagination"></ul>
+                </nav>
+            </div>
+            <script>
 
-                            const page = parseInt(urlParams.get("page")) || 1;
+                async function load() {
+                    console.log("load start");
+                    const playerId = "{player_id}"; // プレイヤーID
+                    const Act = "{act}"; // Act
+                    const currentAct = Act;
 
-                            // フォームの値（URL優先）
-                            const home_character_id = urlParams.get("home_character_id") ?? document.getElementById("home_character_id").value;
-                            const home_input_type_id = urlParams.get("home_input_type_id") ?? document.getElementById("home_input_type_id").value;
-                            const away_character_id = urlParams.get("away_character_id") ?? document.getElementById("away_character_id").value;
-                            const away_input_type_id = urlParams.get("away_input_type_id") ?? document.getElementById("away_input_type_id").value;
-                            const battle_type_id = urlParams.get("battle_type_id") ?? document.getElementById("battle_type_id").value;
-                            const played_from = urlParams.get("played_from") ?? document.getElementById("played_from").value;
-                            const played_to = urlParams.get("played_to") ?? document.getElementById("played_to").value;
+                    // URLから現在のパラメータ取得
+                    const urlParams = new URLSearchParams(window.location.search);
 
-                            // URLに反映（ここ重要）
-                            const params = new URLSearchParams({
-                                page,
-                                home_character_id,
-                                home_input_type_id,
-                                away_character_id,
-                                away_input_type_id,
-                                battle_type_id,
-                                played_from,
-                                played_to
-                            });
+                    const page = parseInt(urlParams.get("page")) || 1;
 
-                            history.pushState(null, "", "?" + params.toString());
+                    // フォームの値（URL優先）
+                    const home_character_id = urlParams.get("home_character_id") ?? document.getElementById("home_character_id").value;
+                    const home_input_type_id = urlParams.get("home_input_type_id") ?? document.getElementById("home_input_type_id").value;
+                    const away_character_id = urlParams.get("away_character_id") ?? document.getElementById("away_character_id").value;
+                    const away_input_type_id = urlParams.get("away_input_type_id") ?? document.getElementById("away_input_type_id").value;
+                    const battle_type_id = urlParams.get("battle_type_id") ?? document.getElementById("battle_type_id").value;
+                    const played_from = urlParams.get("played_from") ?? document.getElementById("played_from").value;
+                    const played_to = urlParams.get("played_to") ?? document.getElementById("played_to").value;
 
-                            // API取得
-                            const res = await fetch(`/battle_logs/${playerId}/${Act}?` + params.toString());
-                            const data = await res.json();
+                    // URLに反映（ここ重要）
+                    const params = new URLSearchParams({
+                        page,
+                        home_character_id,
+                        home_input_type_id,
+                        away_character_id,
+                        away_input_type_id,
+                        battle_type_id,
+                        played_from,
+                        played_to
+                    });
 
-                            // フォームに値を戻す（UX向上）
-                            document.getElementById("home_character_id").value = home_character_id || "";
-                            document.getElementById("home_input_type_id").value = home_input_type_id || "";
-                            document.getElementById("away_character_id").value = away_character_id || "";
-                            document.getElementById("away_input_type_id").value = away_input_type_id || "";
-                            document.getElementById("battle_type_id").value = battle_type_id || "";
-                            document.getElementById("played_from").value = played_from || "";
-                            document.getElementById("played_to").value = played_to || "";
+                    history.pushState(null, "", "?" + params.toString());
 
-                            const select = document.getElementById("act_select");
+                    // API取得
+                    const res = await fetch(`/battle_logs/${playerId}/${Act}?` + params.toString());
+                    const data = await res.json();
 
-                            const acts = data.acts; // Actリスト
+                    // フォームに値を戻す（UX向上）
+                    document.getElementById("home_character_id").value = home_character_id || "";
+                    document.getElementById("home_input_type_id").value = home_input_type_id || "";
+                    document.getElementById("away_character_id").value = away_character_id || "";
+                    document.getElementById("away_input_type_id").value = away_input_type_id || "";
+                    document.getElementById("battle_type_id").value = battle_type_id || "";
+                    document.getElementById("played_from").value = played_from || "";
+                    document.getElementById("played_to").value = played_to || "";
 
-                            acts.forEach(act => {
-                                const option = document.createElement("option");
-                                option.value = act;
-                                option.textContent = act;
+                    const select = document.getElementById("act_select");
 
-                                if (String(act) === String(currentAct)) {
-                                    option.selected = true;
-                                }
+                    const acts = data.acts; // Actリスト
 
-                                select.appendChild(option);
-                            });
+                    acts.forEach(act => {
+                        const option = document.createElement("option");
+                        option.value = act;
+                        option.textContent = act;
 
-                            select.addEventListener("change", () => {
-                                const selectedAct = select.value; // ←これを使う！
+                        if (String(act) === String(currentAct)) {
+                            option.selected = true;
+                        }
 
-                                const params = new URLSearchParams(window.location.search);
+                        select.appendChild(option);
+                    });
 
-                                window.location.href = `/${playerId}/${selectedAct}/battle_logs?` + params.toString();
-                            });
+                    select.addEventListener("change", () => {
+                        const selectedAct = select.value; // ←これを使う！
 
-                            // テーブル初期化
-                            const tbody = document.querySelector("#table tbody");
-                            tbody.innerHTML = "";
+                        const params = new URLSearchParams(window.location.search);
 
-                            // プレイヤー名表示
-                            const link = document.getElementById("player_link");
-                            link.innerText = data.player_name + " (" + playerId + ")";
-                            link.href = `https://www.streetfighter.com/6/buckler/ja-jp/profile/${playerId}`;
+                        window.location.href = `/${playerId}/${selectedAct}/battle_logs?` + params.toString();
+                    });
 
-                            // 行生成
-                            data.battle_logs.forEach(row => {
-                                const tr = document.createElement("tr");
+                    // テーブル初期化
+                    const tbody = document.querySelector("#table tbody");
+                    tbody.innerHTML = "";
 
-                                const result = row.win_or_lose ? "Win" : "Lose";
+                    // プレイヤー名表示
+                    const link = document.getElementById("player_link");
+                    link.innerText = data.player_name + " (" + playerId + ")";
+                    link.href = `https://www.streetfighter.com/6/buckler/ja-jp/profile/${playerId}`;
 
-                                let my_name, my_type, my_character;
-                                let opponent_name, opponent_type, opponent_character, opponent_player_id;
+                    // 行生成
+                    data.battle_logs.forEach(row => {
+                        const tr = document.createElement("tr");
 
-                                if (row.p1_player_id === playerId) {
-                                    my_name = row.p1_name;
-                                    my_type = row.p1_type;
-                                    my_character = row.p1_character;
-                                    opponent_name = row.p2_name;
-                                    opponent_type = row.p2_type;
-                                    opponent_character = row.p2_character;
-                                    opponent_player_id = row.p2_player_id;
-                                } else {
-                                    my_name = row.p2_name;
-                                    my_type = row.p2_type;
-                                    my_character = row.p2_character;
-                                    opponent_name = row.p1_name;
-                                    opponent_type = row.p1_type;
-                                    opponent_character = row.p1_character;
-                                    opponent_player_id = row.p1_player_id;
-                                }
+                        const result = row.win_or_lose ? "Win" : "Lose";
 
-                                tr.innerHTML = `
+                        let my_name, my_type, my_character;
+                        let opponent_name, opponent_type, opponent_character, opponent_player_id;
+
+                        if (row.p1_player_id === playerId) {
+                            my_name = row.p1_name;
+                            my_type = row.p1_type;
+                            my_character = row.p1_character;
+                            opponent_name = row.p2_name;
+                            opponent_type = row.p2_type;
+                            opponent_character = row.p2_character;
+                            opponent_player_id = row.p2_player_id;
+                        } else {
+                            my_name = row.p2_name;
+                            my_type = row.p2_type;
+                            my_character = row.p2_character;
+                            opponent_name = row.p1_name;
+                            opponent_type = row.p1_type;
+                            opponent_character = row.p1_character;
+                            opponent_player_id = row.p1_player_id;
+                        }
+
+                        tr.innerHTML = `
                                 <td>${my_name}</td>
                                 <td>${my_type}</td>
                                 <td>${my_character}</td>
@@ -329,7 +357,7 @@
                                 <td>${opponent_character}</td>
                                 <td>${row.match}</td>
                                 <td>
-                                    <a href="#" onclick="openBattle('${row.replay_id}'); return false;">
+                                    <a href="#" onclick="openBattleDetail('${row.replay_id}'); return false;">
                                         ${row.replay_id}
                                     </a>
                                 </td>
@@ -342,63 +370,125 @@
                                 <td>${row.date}</td>
                             `;
 
-                                tbody.appendChild(tr);
-                            });
+                        tbody.appendChild(tr);
+                    });
 
-                            // ページネーション
-                            const pagination = document.getElementById("pagination");
-                            pagination.innerHTML = "";
+                    // ページネーション
+                    const pagination = document.getElementById("pagination");
+                    pagination.innerHTML = "";
 
-                            const createLink = (p, text, active = false) => {
-                                const li = document.createElement("li");
-                                li.className = "page-item" + (active ? " active" : "");
+                    const createLink = (p, text, active = false) => {
+                        const li = document.createElement("li");
+                        li.className = "page-item" + (active ? " active" : "");
 
-                                const a = document.createElement("a");
-                                a.className = "page-link";
+                        const a = document.createElement("a");
+                        a.className = "page-link";
 
-                                const newParams = new URLSearchParams(params);
-                                newParams.set("page", p);
+                        const newParams = new URLSearchParams(params);
+                        newParams.set("page", p);
 
-                                a.href = "?" + newParams.toString();
-                                a.innerText = text;
+                        a.href = "?" + newParams.toString();
+                        a.innerText = text;
 
-                                li.appendChild(a);
-                                return li;
-                            };
+                        li.appendChild(a);
+                        return li;
+                    };
 
-                            if (page > 1) pagination.appendChild(createLink(page - 1, "<"));
+                    if (page > 1) pagination.appendChild(createLink(page - 1, "<"));
 
-                            for (let i = Math.max(1, page - 2); i <= Math.min(data.total_pages, page + 2); i++) {
-                                pagination.appendChild(createLink(i, i, i === page));
-                            }
+                    for (let i = Math.max(1, page - 2); i <= Math.min(data.total_pages, page + 2); i++) {
+                        pagination.appendChild(createLink(i, i, i === page));
+                    }
 
-                            if (page < data.total_pages) pagination.appendChild(createLink(page + 1, ">"));
-                        }
+                    if (page < data.total_pages) pagination.appendChild(createLink(page + 1, ">"));
+                }
 
-                        load(); // 初回実行
+                function copyText(id) {
+                    const text = document.getElementById(id).value;
+                    navigator.clipboard.writeText(text).then();
+                }
 
-                        function copyText(id) {
-                            const text = document.getElementById(id).value;
-                            navigator.clipboard.writeText(text).then();
-                        }
+                async function openBattleDetail(replayId) {
+                    const res = await fetch(`/battle_log/${replayId}`);
 
-                        function openBattle(replayId) {
-                            const iframe = document.getElementById("battleFrame");
-                            iframe.src = `/battle/${replayId}/`;
-                            document.getElementById("overlay").style.display = "flex";
-                        }
+                    if (!res.ok) {
+                        console.error("API error");
+                        return;
+                    }
 
-                        function closeOverlay() {
-                            document.getElementById("overlay").style.display = "none";
-                            document.getElementById("battleFrame").src = "";
-                        }
+                    const data = await res.json();
 
-                    </script>
-                </table>
-                <nav class="pagy-bootstrap series-nav" aria-label="Pages">
-                    <ul class="pagination" id="pagination"></ul>
-                </nav>
+                    const detail = document.getElementById("battleDetail");
+                    const modal = document.getElementById("battleModal");
+                    modal.style.display = "block";
+
+                    if (!detail) {
+                        console.error("battleDetail not found");
+                        return;
+                    }
+
+                    detail.innerHTML = `
+                            <div id="battle" class="battle">
+            <div class="row border-bottom py-2 px-1">
+                <div class="col text-start"> ${data.replay_id}</div>
+                <div class="col text-center"> ${data.date}</div>
+                <div class="col text-end"> ${data.match}</div>
             </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="col-6 p1-side">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="col-10 text-center challenger-data">
+                            <small class="d-flex justify-content-center gap-3">
+                                <span> ${data.p1_master_rating} MR</span>
+                                <span> ${data.p1_league_point} LP</span>
+                            </small>
+                            <div class="text-truncate fs-2">
+                                <a data-turbo-frame="_top" href="https://www.streetfighter.com/6/buckler/ja-jp/profile/${data.p1_player_id}"> ${data.p1_name}</a>
+                            </div>
+                            <small>
+                                ${data.p1_character}
+                                ${data.p1_type}
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="fs-1">X</div>
+                <div class="col-6 p2-side">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="col-10 text-center challenger-data">
+                            <small class="d-flex justify-content-center gap-3">
+                                <span> ${data.p2_master_rating} MR</span>
+                                <span> ${data.p2_league_point} LP</span>
+                            </small>
+                            <div class="text-truncate fs-2">
+                                <a data-turbo-frame="_top" href="https://www.streetfighter.com/6/buckler/ja-jp/profile/${data.p2_player_id}"> ${data.p2_name}</a>
+                            </div>
+                            <small>
+                                ${data.p2_character}
+                                ${data.p2_type}
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+                    `;
+
+                    document.getElementById("battleModal").classList.remove("hidden");
+                }
+
+                function closeModal() {
+                    const modal = document.getElementById("battleModal");
+                    modal.classList.add("hidden");
+                    modal.style.display = "";
+                }
+
+                load(); // 初回実行
+
+            </script>
+
         </turbo-frame>
     </main>
 
