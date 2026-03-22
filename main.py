@@ -169,9 +169,9 @@ def player_page(player_id: str, act: str):  # プレイヤーページ取得関�
 
     return html  # HTMLを返却
 
-@app.get("/battle_log/{replay_id}")
-def get_replay(replay_id: str):
-    conn = sqlite3.connect("players/3396222654/11/battle_logs.db")
+@app.get("/battle_log/{player}/{act}/{replay_id}")
+def get_replay(replay_id: str, player: str, act: str):
+    conn = sqlite3.connect(f"players/{player}/{act}/battle_logs.db")
     cur = conn.cursor()
 
     cur.execute("""

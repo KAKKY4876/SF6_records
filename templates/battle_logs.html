@@ -212,7 +212,6 @@
                 <div id="battleModal" class="modal hidden">
                     <style>
                         .modal {
-                            display: none;
                             position: fixed;
                             top: 20%;
                             left: 50%;
@@ -221,6 +220,10 @@
                             padding: 20px;
                             border: 1px solid #ccc;
                             z-index: 1000;
+                        }
+
+                        .hidden {
+                            display: none;
                         }
                     </style>
                     <div class="modal-content">
@@ -409,7 +412,9 @@
                 }
 
                 async function openBattleDetail(replayId) {
-                    const res = await fetch(`/battle_log/${replayId}`);
+                    const playerId = "{player_id}";
+                    const Act = "{act}";
+                    const res = await fetch(`/battle_log/${playerId}/${Act}/${replayId}`);
 
                     if (!res.ok) {
                         console.error("API error");
