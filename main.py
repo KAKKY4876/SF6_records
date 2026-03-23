@@ -227,15 +227,3 @@ def safe_parse_list(value):
     git commit -m ""
     git push
 """
-
-"""
-    l : 0
-    v : 1
-    c : 2
-    t : 3
-    d : 4
-    od : 5
-    sa : 6
-    ca : 7
-    p : 8
-"""
