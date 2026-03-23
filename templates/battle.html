@@ -1,39 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="ja" data-bs-theme="dark" data-controller="timezone">
-
-<head>
+  <head>
     <title>SFBUFF</title>
     <meta name="description" content="A statistics website for SF6 matches">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Sfbuff">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="robots" content="noindex">
+      <meta name="robots" content="noindex">
     <meta name="csrf-param" content="authenticity_token" />
-    <meta name="csrf-token"
-        content="4TToB9_wn_AwEl7ZsLtLABBFIRt41xVRhYTnKealSS9e8WmHOYQFI5aUkfvlW--ndPoGtHZRh9_XJbh5Vf6-gA" />
-
+<meta name="csrf-token" content="kxBlOrKoZNVcdVqFeU4dCehFJVL-3iCzugabBhujnwNJNOjCZ8wLJk4uC6yQl4Ybu_49M08LsUqOa6_NbtdmNw" />
+    
 
     <meta name="twitter:title" content="SFBUFF">
     <meta name="twitter:description" content="A statistics website for SF6 matches">
     <meta name="twitter:image" content="https://sfbuff.site/icon.png">
     <meta name="twitter:card" content="summary">
-    <meta name="google-adsense-account" content="ca-pub-9280896679973619">
-    </meta>
+      <meta name="google-adsense-account" content="ca-pub-9280896679973619"></meta>
 
-
+    
 
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <!-- workaround to use import maps in old browsers -->
-    <script async src="https://ga.jspm.io/npm:es-module-shims@2.6.2/dist/es-module-shims.js"></script>
+      <!-- workaround to use import maps in old browsers -->
+      <script async src="https://ga.jspm.io/npm:es-module-shims@2.6.2/dist/es-module-shims.js"></script>
 
     <link rel="stylesheet" href="/assets/application-8776d86d.css" data-turbo-track="reload" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
     <script type="importmap" data-turbo-track="reload">{
   "imports": {
     "application": "/assets/application-976e785c.js",
@@ -71,138 +69,129 @@
     "local-time-i18n/pt-BR": "/assets/local-time-i18n/pt-BR-bd07250b.js"
   }
 }</script>
-    <link rel="modulepreload" href="/assets/application-976e785c.js">
-    <link rel="modulepreload" href="/assets/turbo.min-9fd88cd5.js">
-    <link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
-    <link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
-    <link rel="modulepreload"
-        href="https://cdn.jsdelivr.net/npm/local-time@3.0.3/app/assets/javascripts/local-time.es2017-esm.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js">
-    <link rel="modulepreload"
-        href="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/date-fns@4.1.0/locale/pt-BR.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/date-fns@4.1.0/locale/ja.js">
-    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@rails/request.js@0.0.13/dist/requestjs.min.js">
-    <link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
-    <link rel="modulepreload" href="/assets/controllers/auto_click_controller-31fa6230.js">
-    <link rel="modulepreload" href="/assets/controllers/auto_submit_controller-cb44ac3f.js">
-    <link rel="modulepreload" href="/assets/controllers/chartjs_controller-a86d0c78.js">
-    <link rel="modulepreload" href="/assets/controllers/fair_use_controller-13e8698b.js">
-    <link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
-    <link rel="modulepreload" href="/assets/controllers/locale_selector_controller-06f78097.js">
-    <link rel="modulepreload" href="/assets/controllers/modal_controller-d5ac1262.js">
-    <link rel="modulepreload" href="/assets/controllers/theme_selector_controller-c61d1fd4.js">
-    <link rel="modulepreload" href="/assets/controllers/timezone_controller-05de86e3.js">
-    <link rel="modulepreload" href="/assets/controllers/toast_controller-30fbdc0d.js">
-    <link rel="modulepreload" href="/assets/controllers/turbo_stream_loader_controller-d65ec032.js">
-    <link rel="modulepreload" href="/assets/chartjs/plugins/bg_color-71b18fa6.js">
-    <link rel="modulepreload" href="/assets/chartjs/plugins/index-e7f2f175.js">
-    <link rel="modulepreload" href="/assets/chartjs/plugins/localizer-8a773b81.js">
-    <link rel="modulepreload" href="/assets/chartjs/plugins/marks-5a2fb6c3.js">
-    <link rel="modulepreload" href="/assets/chartjs/plugins/tiptool-6b339b05.js">
-    <link rel="modulepreload" href="/assets/chartjs/plugins/visit-07d11327.js">
-    <link rel="modulepreload" href="/assets/helpers/cookie_helpers-5c19a940.js">
-    <link rel="modulepreload" href="/assets/local-time-i18n/index-34d6a33a.js">
-    <link rel="modulepreload" href="/assets/local-time-i18n/ja-bc7913d3.js">
-    <link rel="modulepreload" href="/assets/local-time-i18n/pt-BR-bd07250b.js">
-    <script type="module">import "application"</script>
-</head>
+<link rel="modulepreload" href="/assets/application-976e785c.js">
+<link rel="modulepreload" href="/assets/turbo.min-9fd88cd5.js">
+<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/local-time@3.0.3/app/assets/javascripts/local-time.es2017-esm.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/date-fns@4.1.0/locale/pt-BR.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/date-fns@4.1.0/locale/ja.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@rails/request.js@0.0.13/dist/requestjs.min.js">
+<link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
+<link rel="modulepreload" href="/assets/controllers/auto_click_controller-31fa6230.js">
+<link rel="modulepreload" href="/assets/controllers/auto_submit_controller-cb44ac3f.js">
+<link rel="modulepreload" href="/assets/controllers/chartjs_controller-a86d0c78.js">
+<link rel="modulepreload" href="/assets/controllers/fair_use_controller-13e8698b.js">
+<link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<link rel="modulepreload" href="/assets/controllers/locale_selector_controller-06f78097.js">
+<link rel="modulepreload" href="/assets/controllers/modal_controller-d5ac1262.js">
+<link rel="modulepreload" href="/assets/controllers/theme_selector_controller-c61d1fd4.js">
+<link rel="modulepreload" href="/assets/controllers/timezone_controller-05de86e3.js">
+<link rel="modulepreload" href="/assets/controllers/toast_controller-30fbdc0d.js">
+<link rel="modulepreload" href="/assets/controllers/turbo_stream_loader_controller-d65ec032.js">
+<link rel="modulepreload" href="/assets/chartjs/plugins/bg_color-71b18fa6.js">
+<link rel="modulepreload" href="/assets/chartjs/plugins/index-e7f2f175.js">
+<link rel="modulepreload" href="/assets/chartjs/plugins/localizer-8a773b81.js">
+<link rel="modulepreload" href="/assets/chartjs/plugins/marks-5a2fb6c3.js">
+<link rel="modulepreload" href="/assets/chartjs/plugins/tiptool-6b339b05.js">
+<link rel="modulepreload" href="/assets/chartjs/plugins/visit-07d11327.js">
+<link rel="modulepreload" href="/assets/helpers/cookie_helpers-5c19a940.js">
+<link rel="modulepreload" href="/assets/local-time-i18n/index-34d6a33a.js">
+<link rel="modulepreload" href="/assets/local-time-i18n/ja-bc7913d3.js">
+<link rel="modulepreload" href="/assets/local-time-i18n/pt-BR-bd07250b.js">
+<script type="module">import "application"</script>
+  </head>
 
-<body class="vh-100 d-flex flex-column">
+  <body class="vh-100 d-flex flex-column">
     <nav class="navbar navbar-expand-md bg-body-tertiary">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="/icon.svg" width="30" height="30" alt="sfbuff logo">
-            </a>
-            <div class="order-md-last col-md-3 col-8">
-
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/fighters/search">プレイヤー</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">概要</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/icon.svg" width="30" height="30" alt="sfbuff logo">
+</a>    <div class="order-md-last col-md-3 col-8">
+      
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/fighters/search">プレイヤー</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">概要</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 
     <main id="main" class="container my-3 flex-fill">
-        <div role="alert" class="alert alert-primary">よろしければ、<a target='_blank' href='https://x.com/sfbuff'><i
-                    class='bi bi-twitter-x'></i>(@sfbuff)</a> もフォローしてください。</div>
+        <div role="alert" class="alert alert-primary">よろしければ、<a target='_blank' href='https://x.com/sfbuff'><i class='bi bi-twitter-x'></i>(@sfbuff)</a> もフォローしてください。</div>
+        
 
+      <div id="battle_43303696" class="battle">
+  <div class="row border-bottom py-2 px-1">
+    <div class="col text-start">CUP5CYEBL</div>
+    <div class="col text-center"><time datetime="2026-03-22T15:49:35Z" data-local="time" data-format="%B %d, %Y %H:%M">March 22, 2026 15:49</time></div>
+    <div class="col text-end">カスタムルーム</div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="col-6 p1-side">
+      <div class="d-flex justify-content-between align-items-center">
+  <div class="col-10 text-center challenger-data">
+    <small class="d-flex justify-content-center gap-3">
+        <span>1573 MR</span>
+        <span>73949 LP</span>
+    </small>
+    <div class="text-truncate fs-2">
+      <a data-turbo-frame="_top" href="/fighters/3396222654">KAKKY4876</a>
+    </div>
+    <small>
+      ケン
+      C
+    </small>
+  </div>
+  <div class="col-2 text-center align-self-center round-list">
+    <ul class="list-unstyled mb-1">
+        <li><span class="badge px-0 text-center" style="width: 20px; background-color: #2D3644; color: #C7C7C8">L</span></li>
+        <li><span class="badge px-0 text-center" style="width: 20px; background-color: #2D3644; color: #C7C7C8">L</span></li>
+    </ul>
+  </div>
+</div>
 
-        <div id="battle_43039653" class="battle">
-            <div class="row border-bottom py-2 px-1">
-                <div class="col text-start">W9JMGARKY</div>
-                <div class="col text-center"><time datetime="2026-03-20T16:20:08Z" data-local="time"
-                        data-format="%B %d, %Y %H:%M">March 20, 2026 16:20</time></div>
-                <div class="col text-end">ランクマッチ</div>
-            </div>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="col-6 p1-side">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="col-10 text-center challenger-data">
-                            <small class="d-flex justify-content-center gap-3">
-                                <span>24951 LP</span>
-                            </small>
-                            <div class="text-truncate fs-2">
-                                <a data-turbo-frame="_top" href="/fighters/2430585006">たまごん</a>
-                            </div>
-                            <small>
-                                アレックス
-                                M
-                            </small>
-                        </div>
-                        <div class="col-2 text-center align-self-center round-list">
-                            <ul class="list-unstyled mb-1">
-                                <li><span class="badge px-0 text-center"
-                                        style="width: 20px; background-color: #2C003E; color: #E297FF">V</span></li>
-                                <li><span class="badge px-0 text-center"
-                                        style="width: 20px; background-color: #2C003E; color: #E297FF">V</span></li>
-                            </ul>
-                        </div>
-                    </div>
+    </div>
+    <div class="fs-1">X</div>
+    <div class="col-6 p2-side">
+      <div class="d-flex justify-content-between align-items-center">
+  <div class="col-10 text-center challenger-data">
+    <small class="d-flex justify-content-center gap-3">
+        <span>1500 MR</span>
+        <span>25006 LP</span>
+    </small>
+    <div class="text-truncate fs-2">
+      <a data-turbo-frame="_top" href="/fighters/2430585006">たまごん</a>
+    </div>
+    <small>
+      アレックス
+      M
+    </small>
+  </div>
+  <div class="col-2 text-center align-self-center round-list">
+    <ul class="list-unstyled mb-1">
+        <li><span class="badge px-0 text-center" style="width: 20px; background-color: #2C003E; color: #E297FF">V</span></li>
+        <li><span class="badge px-0 text-center" style="width: 20px; background-color: #442600; color: #FFD097">CA</span></li>
+    </ul>
+  </div>
+</div>
 
-                </div>
-                <div class="fs-1">X</div>
-                <div class="col-6 p2-side">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="col-10 text-center challenger-data">
-                            <small class="d-flex justify-content-center gap-3">
-                                <span>24729 LP</span>
-                            </small>
-                            <div class="text-truncate fs-2">
-                                <a data-turbo-frame="_top" href="/fighters/2820720177">Marny</a>
-                            </div>
-                            <small>
-                                アレックス
-                                C
-                            </small>
-                        </div>
-                        <div class="col-2 text-center align-self-center round-list">
-                            <ul class="list-unstyled mb-1">
-                                <li><span class="badge px-0 text-center"
-                                        style="width: 20px; background-color: #2D3644; color: #C7C7C8">L</span></li>
-                                <li><span class="badge px-0 text-center"
-                                        style="width: 20px; background-color: #2D3644; color: #C7C7C8">L</span></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+    </div>
+  </div>
+</div>
 
 
     </main>
@@ -211,81 +200,59 @@
     <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toasts" data-turbo-permanent="1"></div>
 
     <div class="footer py-3 bg-body-tertiary">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex gap-2">
-                    <div class="dropdown" data-controller="locale-selector">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-globe"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <button data-locale-selector-locale-param="en"
-                                    data-action="locale-selector#switchLocale" type="button"
-                                    class="dropdown-item ">English</button>
-                            </li>
-                            <li>
-                                <button data-locale-selector-locale-param="pt-BR"
-                                    data-action="locale-selector#switchLocale" type="button"
-                                    class="dropdown-item ">Português</button>
-                            </li>
-                            <li>
-                                <button data-locale-selector-locale-param="ja"
-                                    data-action="locale-selector#switchLocale" type="button"
-                                    class="dropdown-item active">日本語</button>
-                            </li>
-                        </ul>
-                    </div>
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex gap-2">
+        <div class="dropdown" data-controller="locale-selector">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+    <i class="bi bi-globe"></i>
+  </button>
+  <ul class="dropdown-menu">
+    <li>
+      <button data-locale-selector-locale-param="en" data-action="locale-selector#switchLocale" type="button" class="dropdown-item ">English</button>
+    </li>
+    <li>
+      <button data-locale-selector-locale-param="pt-BR" data-action="locale-selector#switchLocale" type="button" class="dropdown-item ">Português</button>
+    </li>
+    <li>
+      <button data-locale-selector-locale-param="ja" data-action="locale-selector#switchLocale" type="button" class="dropdown-item active">日本語</button>
+    </li>
+  </ul>
+</div>
 
-                    <div class="dropdown" data-controller="theme-selector">
-                        <button id="bd-theme" class="btn btn-secondary dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown">
-                            <i class="bi bi-palette"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="bd-theme-text">
-                            <li>
-                                <button type="button" class="dropdown-item d-flex align-items-center"
-                                    data-theme-selector-target="option" data-theme-selector-theme-param="light"
-                                    data-action="theme-selector#switchTheme">
-                                    <i class="bi bi-sun-fill"></i>
-                                    <span class="ps-1"><span class="translation_missing"
-                                            title="translation missing: ja.application.theme_selector.light">Light</span></span>
-                                </button>
-                            </li>
-                            <li>
-                                <button type="button" class="dropdown-item d-flex align-items-center"
-                                    data-theme-selector-target="option" data-theme-selector-theme-param="dark"
-                                    data-action="theme-selector#switchTheme">
-                                    <i class="bi bi-moon-stars-fill"></i>
-                                    <span class="ps-1"><span class="translation_missing"
-                                            title="translation missing: ja.application.theme_selector.dark">Dark</span></span>
-                                </button>
-                            </li>
-                            <li>
-                                <button type="button" class="dropdown-item d-flex align-items-center"
-                                    data-theme-selector-target="option" data-theme-selector-theme-param="auto"
-                                    data-action="theme-selector#switchTheme">
-                                    <i class="bi bi-circle-half"></i>
-                                    <span class="ps-1"><span class="translation_missing"
-                                            title="translation missing: ja.application.theme_selector.auto">Auto</span></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+        <div class="dropdown" data-controller="theme-selector">
+  <button id="bd-theme" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+    <i class="bi bi-palette"></i>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="bd-theme-text">
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-theme-selector-target="option" data-theme-selector-theme-param="light" data-action="theme-selector#switchTheme">
+        <i class="bi bi-sun-fill"></i>
+        <span class="ps-1"><span class="translation_missing" title="translation missing: ja.application.theme_selector.light">Light</span></span>
+</button>    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-theme-selector-target="option" data-theme-selector-theme-param="dark" data-action="theme-selector#switchTheme">
+        <i class="bi bi-moon-stars-fill"></i>
+        <span class="ps-1"><span class="translation_missing" title="translation missing: ja.application.theme_selector.dark">Dark</span></span>
+</button>    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-theme-selector-target="option" data-theme-selector-theme-param="auto" data-action="theme-selector#switchTheme">
+        <i class="bi bi-circle-half"></i>
+        <span class="ps-1"><span class="translation_missing" title="translation missing: ja.application.theme_selector.auto">Auto</span></span>
+</button>    </li>
+  </ul>
+</div>
 
-                </div>
-                <div>
-                    <ul class="navbar-nav flex-row flex-wrap">
-                        <li class="nav-item col-6 col-lg-auto"><a target="_blank" class="nav-link px-2 fs-5"
-                                href="https://github.com/alanoliveira/sfbuff"><i class="bi bi-github"></i></a></li>
-                        <li class="nav-item col-6 col-lg-auto"><a target="_blank" class="nav-link px-2 fs-5"
-                                href="https://x.com/sfbuff"><i class="bi bi-twitter"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+      </div>
+      <div>
+        <ul class="navbar-nav flex-row flex-wrap">
+            <li class="nav-item col-6 col-lg-auto"><a target="_blank" class="nav-link px-2 fs-5" href="https://github.com/alanoliveira/sfbuff"><i class="bi bi-github"></i></a></li>
+            <li class="nav-item col-6 col-lg-auto"><a target="_blank" class="nav-link px-2 fs-5" href="https://x.com/sfbuff"><i class="bi bi-twitter"></i></a></li>
+        </ul>
+      </div>
     </div>
+  </div>
+</div>
 
-</body>
-
+  </body>
 </html>

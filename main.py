@@ -1,6 +1,7 @@
 import sqlite3  # SQLiteデータベース操作用
 import json  # JSON形式のデータ処理用
 import os
+import ast  # 安全なリテラル評価用
 from datetime import datetime, timezone, timedelta  # 日時処理用
 from typing import Optional  # 型ヒント用
 from fastapi import FastAPI  # FastAPIフレームワーク
@@ -185,7 +186,6 @@ def get_replay(replay_id: str, player: str, act: str):
     row = cur.fetchone()
     conn.close()
 
-    # 👈 先にチェック！！
     if row is None:
         return {"error": "not found"}
 
@@ -199,17 +199,23 @@ def get_replay(replay_id: str, player: str, act: str):
         "p1_player_id": row[6],
         "p1_type": row[7],
         "p1_character": row[8],
-        "p1_result": row[9],
+        "p1_result": safe_parse_list(row[9]),
         "p2_league_point": row[10],
         "p2_master_rating": row[11],
         "p2_name": row[12],
         "p2_player_id": row[13],
         "p2_type": row[14],
         "p2_character": row[15],
-        "p2_result": row[16]
+        "p2_result": safe_parse_list(row[16])
     }
 
     return battle_log
+
+def safe_parse_list(value):
+    try:
+        return ast.literal_eval(value) if value else []
+    except (ValueError, SyntaxError):
+        return []
 
 
 """
@@ -220,4 +226,16 @@ def get_replay(replay_id: str, player: str, act: str):
     git add .
     git commit -m ""
     git push
+"""
+
+"""
+    l : 0
+    v : 1
+    c : 2
+    t : 3
+    d : 4
+    od : 5
+    sa : 6
+    ca : 7
+    p : 8
 """
