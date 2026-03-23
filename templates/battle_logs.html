@@ -209,22 +209,47 @@
 
                 </table>
 
+                <div id="overlay" class="overlay hidden"></div>
                 <div id="battleModal" class="modal hidden">
                     <style>
+                        .overlay {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+
+                            background: rgba(0, 0, 0, 0.5);
+                            /* 半透明の黒 */
+                            z-index: 999;
+                            /* モーダルより下 */
+                        }
+
                         .modal {
                             position: fixed;
                             left: 50%;
                             top: 50%;
-                            transform: translateX(-50%) translateY(-50%);
+                            transform: translate(-50%, -50%);
 
-                            width: 40%;
-                            height: 20%;
+                            width: 90%;
+                            /* スマホではほぼ全幅 */
+                            max-width: 500px;
+                            /* PCでは広がりすぎない */
+                            height: auto;
+                            /* 中身に合わせる */
+
+                            padding: 20px;
+                            /* 余白を追加 */
 
                             background-color: rgb(255, 255, 255);
 
                             display: flex;
                             justify-content: center;
-                            align-items: center
+                            align-items: center;
+
+                            border-radius: 10px;
+                            /* 見た目向上 */
+                            z-index: 1000;
                         }
 
                         .hidden {
@@ -485,10 +510,13 @@
                     `;
 
                     document.getElementById("battleModal").classList.remove("hidden");
+                    document.getElementById("overlay").classList.remove("hidden");
                 }
 
                 function closeModal() {
                     const modal = document.getElementById("battleModal");
+                    document.getElementById("battleModal").classList.add("hidden");
+                    document.getElementById("overlay").classList.add("hidden");
                     modal.classList.add("hidden");
                     modal.style.display = "";
                 }
