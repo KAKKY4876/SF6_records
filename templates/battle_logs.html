@@ -209,63 +209,65 @@
 
                 </table>
 
-                <div id="overlay" class="overlay hidden"></div>
-                <div id="battleModal" class="modal hidden">
-                    <style>
-                        .overlay {
-                            position: fixed;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-
-                            background: rgba(0, 0, 0, 0.5);
-                            /* 半透明の黒 */
-                            z-index: 999;
-                            /* モーダルより下 */
-                        }
-
-                        .modal {
-                            position: fixed;
-                            left: 50%;
-                            top: 50%;
-                            transform: translate(-50%, -50%);
-
-                            width: 90%;
-                            /* スマホではほぼ全幅 */
-                            max-width: 500px;
-                            /* PCでは広がりすぎない */
-                            height: auto;
-                            /* 中身に合わせる */
-
-                            padding: 20px;
-                            /* 余白を追加 */
-
-                            background-color: rgb(255, 255, 255);
-
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-
-                            border-radius: 10px;
-                            /* 見た目向上 */
-                            z-index: 1000;
-                        }
-
-                        .hidden {
-                            display: none;
-                        }
-                    </style>
-                    <div class="modal-content">
-
-                        <button onclick="closeModal()">&times;</button>
-                        <div id="battleDetail"></div> <!-- ← これだけ残す -->
-                    </div>
-                </div>
-                <nav class="pagy-bootstrap series-nav" aria-label="Pages">
-                    <ul class="pagination" id="pagination"></ul>
-                </nav>
             </div>
+
+            <div id="overlay" class="overlay hidden"></div>
+            <div id="battleModal" class="modal hidden">
+                <style>
+                    .overlay {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+
+                        background: rgba(0, 0, 0, 0.5);
+                        /* 半透明の黒 */
+                        z-index: 999;
+                        /* モーダルより下 */
+                    }
+
+                    .modal {
+                        position: fixed;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+
+                        width: 90%;
+                        /* スマホではほぼ全幅 */
+                        max-width: 500px;
+                        /* PCでは広がりすぎない */
+                        height: auto;
+                        /* 中身に合わせる */
+
+                        padding: 20px;
+                        /* 余白を追加 */
+
+                        background-color: rgb(255, 255, 255);
+
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        border-radius: 10px;
+                        /* 見た目向上 */
+                        z-index: 1000;
+                    }
+
+                    .hidden {
+                        display: none;
+                    }
+                </style>
+                <div class="modal-content">
+
+                    <button onclick="closeModal()">&times;</button>
+                    <div id="battleDetail"></div> <!-- ← これだけ残す -->
+                </div>
+            </div>
+            <nav class="pagy-bootstrap series-nav" aria-label="Pages">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+
             <script>
 
                 async function load() {
