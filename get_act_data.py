@@ -58,3 +58,5 @@ def main():
             conn.execute("INSERT OR REPLACE INTO acts (act, startline, deadline) VALUES (?, ?, ?)",
                         (act, startline, deadline))
             conn.commit()
+
+main()
